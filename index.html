@@ -1,131 +1,327 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamza Tahraoui | Courtier d'assurances</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .lang-en { display: none; }
-        .hero-yellow { background-color: #F4D03F; }
-        .navy-blue { background-color: #003366; }
-        .text-navy { color: #003366; }
-        /* Creating the curved photo effect from your layout */
-        .photo-container {
-            border-radius: 40px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hamza | Assurances & Investissement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f3ee;
+      --surface: #ffffff;
+      --border: rgba(0,0,0,0.07);
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --orange: #e07b2a;
+      --orange-bg: #fff5ec;
+      --green: #1a9e5c;
+      --green-bg: #edfaf3;
+      --blue: #2563c4;
+      --blue-bg: #eef3fd;
+      --red: #c41e3a;
+      --red-bg: #fdf0f2;
+      --purple: #7c3aed;
+      --purple-bg: #f3f0fd;
+      --text: #1a1f2e;
+      --muted: #8a95a8;
+      --white: #fff;
+    }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 3rem 1rem 4rem;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 40% at 20% 10%, rgba(224,123,42,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 90%, rgba(26,158,92,0.07) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 440px;
+      position: relative; z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 2rem;
+      animation: rise 0.5s ease both;
+    }
+
+    .avatar-wrap { position: relative; width: 90px; height: 90px; }
+    .avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffe0c8, #ffd0a8);
+      border: 3px solid #fff;
+      box-shadow: 0 4px 20px rgba(224,123,42,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.6rem;
+      overflow: hidden;
+    }
+    .avatar-ring {
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(var(--orange), #f5c890, var(--orange));
+      animation: spin 5s linear infinite;
+      opacity: 0.5;
+      z-index: -1;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .handle { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .name { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+    .bio { font-size: 0.85rem; color: #6b7280; text-align: center; line-height: 1.65; max-width: 310px; font-weight: 300; }
+    .location-tag {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      box-shadow: var(--shadow);
+    }
+
+    .section-label {
+      width: 100%;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 1.6rem 0 0.7rem;
+      padding-left: 4px;
+    }
+
+    .link-card {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+      margin-bottom: 0.7rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .link-card::after {
+      content: '→';
+      position: absolute;
+      right: 1.25rem;
+      font-size: 1rem;
+      color: #cbd5e1;
+      transition: right 0.2s, color 0.2s;
+    }
+    .link-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.1); border-color: rgba(224,123,42,0.3); }
+    .link-card:hover::after { right: 1rem; color: var(--orange); }
+
+    .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .icon-auto   { background: var(--orange-bg); }
+    .icon-home   { background: var(--blue-bg); }
+    .icon-bundle { background: var(--purple-bg); }
+
+    .card-text { flex: 1; }
+    .card-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.2rem; color: var(--text); }
+    .card-sub   { font-size: 0.73rem; color: var(--muted); font-weight: 300; }
+
+    .special-card {
+      width: 100%;
+      border-radius: 16px;
+      padding: 1.25rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: box-shadow 0.2s, transform 0.15s;
+      margin-bottom: 0.7rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .special-card::after { content: '→'; position: absolute; right: 1.25rem; font-size: 1rem; transition: right 0.2s; }
+    .special-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
+    .special-card:hover::after { right: 1rem; }
+
+    .cibc-card { background: linear-gradient(135deg, #fff5f6, #fff0f2); border: 1px solid rgba(196,30,58,0.15); }
+    .cibc-card::after { color: var(--red); }
+    .ws-card   { background: linear-gradient(135deg, #edfaf3, #e6f9f0); border: 1px solid rgba(26,158,92,0.2); }
+    .ws-card::after { color: var(--green); }
+
+    .sp-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .sp-icon-red   { background: rgba(196,30,58,0.1); }
+    .sp-icon-green { background: rgba(26,158,92,0.12); }
+
+    .sp-text { flex: 1; }
+    .sp-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .cibc-card .sp-sub { font-size: 0.73rem; font-weight: 300; color: #b05060; }
+    .ws-card   .sp-sub { font-size: 0.73rem; font-weight: 300; color: #2d8c60; }
+
+    .ws-badge {
+      background: var(--green);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-right: 1.8rem;
+    }
+
+    .contact-card {
+      width: 100%;
+      background: var(--surface);
+      border: 1px dashed rgba(0,0,0,0.1);
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+      margin-bottom: 0.7rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    }
+    .contact-card:hover { transform: translateY(-2px); border-color: rgba(224,123,42,0.35); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+    .contact-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: #f4f6f9;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-text { flex: 1; }
+    .contact-title { font-size: 0.88rem; font-weight: 500; }
+    .contact-sub   { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+
+    .foot { margin-top: 2.5rem; font-size: 0.67rem; color: #c0c8d4; text-align: center; letter-spacing: 0.06em; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .profile      { animation: rise 0.45s 0.00s ease both; }
+    .link-card:nth-child(1) { animation: rise 0.45s 0.08s ease both; }
+    .link-card:nth-child(2) { animation: rise 0.45s 0.14s ease both; }
+    .link-card:nth-child(3) { animation: rise 0.45s 0.20s ease both; }
+    .cibc-card    { animation: rise 0.45s 0.26s ease both; }
+    .ws-card      { animation: rise 0.45s 0.32s ease both; }
+    .contact-card { animation: rise 0.45s 0.38s ease both; }
+  </style>
 </head>
 <body>
+<div class="page">
 
-    <nav class="bg-white px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-6 h-6 bg-blue-700 rounded-sm"></div>
-                <span class="font-bold text-xl text-slate-800">Hamza Tahraoui</span>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleLang()" class="border border-slate-300 px-6 py-2 rounded-full text-xs font-bold text-blue-900 hover:bg-slate-50">
-                    <span class="lang-fr">ENGLISH</span><span class="lang-en">VERSION FRANÇAISE</span>
-                </button>
-            </div>
-        </div>
-    </nav>
+  <!-- PROFILE -->
+  <div class="profile">
+    <div class="name">Hamza Tahraoui</div>
+    <div class="bio">Conseiller en assurances auto & habitation au Québec. Je vous aide à économiser et à investir intelligemment. 🍁</div>
+    <div class="location-tag">📍 Québec, Canada</div>
+  </div>
 
-    <header class="hero-yellow pt-12 pb-24 px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            
-            <div class="z-10">
-                <h1 class="text-5xl md:text-7xl font-black text-navy leading-[0.9] mb-4">
-                    <span class="lang-fr">L'assurance<br>rendue simple.<br></span>
-                    <span class="lang-en">Insurance<br><br>rendue simple.</span>
-                </h1>
-                <p class="text-2xl font-bold text-navy mb-10">Insurance Broker</p>
-                
-                <div class="bg-white border-l-[12px] border-navy-blue p-8 rounded-r-3xl shadow-2xl relative mb-10 max-w-lg">
-                    <p class="text-navy text-[10px] font-black uppercase tracking-widest mb-3 bg-blue-50 inline-block px-2 py-1 rounded">
-                        <span class="lang-fr">Votre Courtier Dédié</span><span class="lang-en">Your Dedicated Broker</span>
-                    </p>
-                    <h2 class="text-2xl font-bold text-slate-800">Hamza Tahraoui</h2>
-                    <p class="text-4xl md:text-5xl font-black text-navy mt-1">
-                        514-313-5999 <span class="text-2xl opacity-50">#286</span>
-                    </p>
-                </div>
+  <!-- INSURANCE -->
+  <div class="section-label">🛡️ Assurances</div>
 
-                <a href="tel:5143135999" class="navy-blue text-white px-10 py-4 rounded-xl font-black text-lg hover:opacity-90 transition inline-block shadow-lg">
-                    <span class="lang-fr">Soumission Gratuite</span><span class="lang-en">Free Quote</span>
-                </a>
-            </div>
+  <a href="tel:4387711845" class="link-card">
+    <div class="card-icon icon-auto">🚗</div>
+    <div class="card-text">
+      <div class="card-title">Assurance Auto</div>
+      <div class="card-sub">Soumission gratuite · 438-771-1845</div>
+    </div>
+  </a>
 
-            <div class="photo-container h-[550px]">
-                <img src="profile-photo.jpg" alt="Hamza Tahraoui" class="w-full h-full object-cover">
-            </div>
-        </div>
-    </header>
+  <a href="tel:4387711845" class="link-card">
+    <div class="card-icon icon-home">🏠</div>
+    <div class="card-text">
+      <div class="card-title">Assurance Habitation</div>
+      <div class="card-sub">Propriétaire ou locataire · 438-771-1845</div>
+    </div>
+  </a>
 
-    <section class="max-w-7xl mx-auto px-6 -mt-12 mb-20">
-        <div class="bg-white rounded-3xl shadow-xl p-12 grid md:grid-cols-3 gap-12">
-            <div>
-                <div class="w-1 h-10 bg-blue-900 mb-6"></div>
-                <h3 class="text-2xl font-black text-navy mb-4">Auto</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    <span class="lang-fr">Des tarifs compétitifs avec reconnaissance de votre expérience de conduite globale.</span>
-                    <span class="lang-en">Competitive rates recognizing your international driving experience.</span>
-                </p>
-            </div>
-            <div>
-                <div class="w-1 h-10 bg-blue-900 mb-6"></div>
-                <h3 class="text-2xl font-black text-navy mb-4">Habitation</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    <span class="lang-fr">Protéger votre foyer et vos biens avec des couvertures adaptées à votre réalité.</span>
-                    <span class="lang-en">Protecting your home and belongings with coverage tailored to you.</span>
-                </p>
-            </div>
-            <div>
-                <div class="w-1 h-10 bg-blue-900 mb-6"></div>
-                <h3 class="text-2xl font-black text-navy mb-4">Arrivants</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    <span class="lang-fr">Spécialiste dans l'accompagnement des nouveaux résidents au Québec.</span>
-                    <span class="lang-en">Specialized support for new residents arriving in Quebec.</span>
-                </p>
-            </div>
-        </div>
-    </section>
+  <a href="tel:4387711845" class="link-card">
+    <div class="card-icon icon-bundle">💼</div>
+    <div class="card-text">
+      <div class="card-title">Forfait Combiné Auto + Habitation</div>
+      <div class="card-sub">Économisez jusqu'à 20% · 438-771-1845</div>
+    </div>
+  </a>
 
-    <footer class="bg-white py-20 px-6 border-t border-slate-100">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
-            <div>
-                <h3 class="text-3xl font-black text-navy mb-4">Hamza Tahraoui</h3>
-                <p class="text-slate-500 mb-2 font-bold uppercase tracking-widest text-xs">Certifié par l'AMF | Cabinet de courtage agréé</p>
-                <p class="text-slate-500">3135 Bd Moïse-Vincent #103, Saint-Hubert, QC J3Z 0G7</p>
-            </div>
-            <div class="md:text-right">
-                <p class="text-slate-400 font-bold mb-2">Disponible du lundi au vendredi, 9h à 17h</p>
-                <p class="text-5xl font-black text-yellow-500">514-313-5999 #286</p>
-            </div>
-        </div>
-    </footer>
+  <!-- CIBC -->
+  <div class="section-label">🏦 Banque</div>
 
-    <script>
-        function toggleLang() {
-            const fr = document.querySelectorAll('.lang-fr');
-            const en = document.querySelectorAll('.lang-en');
-            const isFr = document.documentElement.lang === 'fr';
+  <a href="https://www.cibconline.cibc.com/ebm-resources/public/cibc-referral-app/client/index.html#/welcome?locale=fr&xref=11117111618704420990&utrc=E2358:1" target="_blank" rel="noopener" class="special-card cibc-card">
+    <div class="sp-icon sp-icon-red">🏦</div>
+    <div class="sp-text">
+      <div class="sp-title">CIBC · Compte Nouveaux Arrivants</div>
+      <div class="sp-sub">Ouvrez un compte bancaire au Canada · Gratuit</div>
+    </div>
+  </a>
 
-            if (isFr) {
-                fr.forEach(el => el.style.display = 'none');
-                en.forEach(el => el.style.display = 'inline-block');
-                document.documentElement.lang = 'en';
-            } else {
-                fr.forEach(el => el.style.display = 'inline-block');
-                en.forEach(el => el.style.display = 'none');
-                document.documentElement.lang = 'fr';
-            }
-        }
-    </script>
+  <!-- WEALTHSIMPLE -->
+  <div class="section-label">💸 Investissement</div>
+
+  <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="special-card ws-card">
+    <div class="sp-icon sp-icon-green">📈</div>
+    <div class="sp-text">
+      <div class="sp-title">Wealthsimple · Ouvrir un compte</div>
+      <div class="sp-sub">CELI, REER · Zéro commission · Bonus à l'inscription</div>
+    </div>
+    <div class="ws-badge">+25$</div>
+  </a>
+
+  <!-- CONTACT -->
+  <div class="section-label">📬 Me joindre</div>
+
+  <a href="mailto:info.assurance.investement@gmail.com" class="contact-card">
+    <div class="contact-icon">✉️</div>
+    <div class="contact-text">
+      <div class="contact-title">Courriel</div>
+      <div class="contact-sub">info.assurance.investement@gmail.com</div>
+    </div>
+  </a>
+
+
+  <div class="foot">© 2025 Hamza · Québec, Canada</div>
+</div>
 </body>
 </html>
