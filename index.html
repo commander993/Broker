@@ -86,25 +86,46 @@
     .contact-title { font-size: 0.88rem; font-weight: 500; }
     .contact-sub { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
 
-    /* ARTICLE */
-    .article-card { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
-    .article-hero { background: linear-gradient(135deg, #0a2e1c 0%, #1a9e5c 55%, #22c472 100%); padding: 1.6rem 1.4rem 1.4rem; position: relative; overflow: hidden; }
-    .article-hero::before { content: '📈'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.1; transform: rotate(15deg); pointer-events: none; }
+    /* ARTICLE CARD (shared base) */
+    .article-card { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 0.7rem; }
+
+    /* HERO VARIANTS */
+    .article-hero { padding: 1.6rem 1.4rem 1.4rem; position: relative; overflow: hidden; }
+    .article-hero.green  { background: linear-gradient(135deg, #0a2e1c 0%, #1a9e5c 55%, #22c472 100%); }
+    .article-hero.green::before  { content: '📈'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.1; transform: rotate(15deg); pointer-events: none; }
+    .article-hero.orange { background: linear-gradient(135deg, #2e1a0a 0%, #e07b2a 55%, #f5a045 100%); }
+    .article-hero.orange::before { content: '🛡️'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.1; transform: rotate(15deg); pointer-events: none; }
+    .article-hero.blue   { background: linear-gradient(135deg, #0a1a2e 0%, #2563c4 55%, #4a90e8 100%); }
+    .article-hero.blue::before   { content: '🏦'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.1; transform: rotate(15deg); pointer-events: none; }
+
     .article-hero-tags { display: flex; gap: 0.4rem; margin-bottom: 0.85rem; flex-wrap: wrap; }
     .hero-tag { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 6px; background: rgba(255,255,255,0.18); color: #fff; }
     .article-hero-title { font-size: 1.08rem; font-weight: 700; color: #fff; line-height: 1.4; letter-spacing: -0.01em; }
     .article-hero-meta { margin-top: 0.8rem; font-size: 0.67rem; color: rgba(255,255,255,0.6); display: flex; gap: 1rem; }
 
-    .article-toggle { width: 100%; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.4rem; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 600; color: var(--green); border-top: 1px solid var(--border); transition: background 0.15s; }
-    .article-toggle:hover { background: var(--green-bg); }
-    .toggle-icon { width: 22px; height: 22px; border-radius: 50%; background: var(--green-bg); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: transform 0.35s; flex-shrink: 0; }
+    /* TOGGLE — color-aware */
+    .article-toggle { width: 100%; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.4rem; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 600; border-top: 1px solid var(--border); transition: background 0.15s; }
+    .article-toggle.green  { color: var(--green); }
+    .article-toggle.green:hover  { background: var(--green-bg); }
+    .article-toggle.orange { color: var(--orange); }
+    .article-toggle.orange:hover { background: var(--orange-bg); }
+    .article-toggle.blue   { color: var(--blue); }
+    .article-toggle.blue:hover   { background: var(--blue-bg); }
+
+    .toggle-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: transform 0.35s; flex-shrink: 0; }
+    .toggle-icon.green  { background: var(--green-bg);  color: var(--green); }
+    .toggle-icon.orange { background: var(--orange-bg); color: var(--orange); }
+    .toggle-icon.blue   { background: var(--blue-bg);   color: var(--blue); }
     .article-card.open .toggle-icon { transform: rotate(180deg); }
 
     .article-body { max-height: 0; overflow: hidden; transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1); }
     .article-card.open .article-body { max-height: 6000px; }
     .article-inner { padding: 1.4rem 1.4rem 1.6rem; }
 
-    .article-intro { font-size: 0.82rem; line-height: 1.8; color: #4b5563; font-weight: 300; margin-bottom: 1.4rem; border-left: 3px solid var(--green); padding-left: 0.9rem; }
+    .article-intro { font-size: 0.82rem; line-height: 1.8; color: #4b5563; font-weight: 300; margin-bottom: 1.4rem; padding-left: 0.9rem; }
+    .article-intro.green  { border-left: 3px solid var(--green); }
+    .article-intro.orange { border-left: 3px solid var(--orange); }
+    .article-intro.blue   { border-left: 3px solid var(--blue); }
 
     .account-grid { display: flex; gap: 0.6rem; margin-bottom: 1.4rem; }
     .account-box { flex: 1; border-radius: 12px; padding: 1rem 0.9rem; display: flex; flex-direction: column; gap: 0.4rem; transition: transform 0.15s, box-shadow 0.15s; }
@@ -126,8 +147,14 @@
     .step-list { display: flex; flex-direction: column; }
     .step { display: flex; align-items: stretch; }
     .step-left { display: flex; flex-direction: column; align-items: center; width: 36px; flex-shrink: 0; padding-top: 2px; }
-    .step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: #fff; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 0 0 3px var(--green-bg); }
-    .step-line { width: 2px; flex: 1; min-height: 16px; background: linear-gradient(to bottom, rgba(26,158,92,0.3), rgba(26,158,92,0.08)); margin: 4px 0; }
+    .step-num { width: 30px; height: 30px; border-radius: 50%; color: #fff; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-num.green  { background: var(--green);  box-shadow: 0 0 0 3px var(--green-bg); }
+    .step-num.orange { background: var(--orange); box-shadow: 0 0 0 3px var(--orange-bg); }
+    .step-num.blue   { background: var(--blue);   box-shadow: 0 0 0 3px var(--blue-bg); }
+    .step-line { width: 2px; flex: 1; min-height: 16px; margin: 4px 0; }
+    .step-line.green  { background: linear-gradient(to bottom, rgba(26,158,92,0.3),  rgba(26,158,92,0.08)); }
+    .step-line.orange { background: linear-gradient(to bottom, rgba(224,123,42,0.3), rgba(224,123,42,0.08)); }
+    .step-line.blue   { background: linear-gradient(to bottom, rgba(37,99,196,0.3),  rgba(37,99,196,0.08)); }
     .step:last-child .step-line { display: none; }
     .step-content { flex: 1; padding: 0 0 1.5rem 0.9rem; }
     .step-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.45rem; line-height: 1.3; }
@@ -135,11 +162,18 @@
     .step-desc strong { font-weight: 600; color: #374151; }
     .step-bullets { margin: 0.6rem 0 0 0; display: flex; flex-direction: column; gap: 0.35rem; }
     .step-bullet { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.75rem; line-height: 1.65; color: #6b7280; font-weight: 300; }
-    .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px; }
-    .step-badge { display: inline-block; background: var(--green-bg); color: var(--green); font-size: 0.67rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 6px; margin: 0 0.15rem; vertical-align: middle; }
-    .step-badge.blue { background: var(--blue-bg); color: var(--blue); }
+    .bullet-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .bullet-dot.green  { background: var(--green); }
+    .bullet-dot.orange { background: var(--orange); }
+    .bullet-dot.blue   { background: var(--blue); }
+    .step-badge { display: inline-block; font-size: 0.67rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 6px; margin: 0 0.15rem; vertical-align: middle; }
+    .step-badge.green  { background: var(--green-bg);  color: var(--green); }
+    .step-badge.blue   { background: var(--blue-bg);   color: var(--blue); }
     .step-badge.orange { background: var(--orange-bg); color: var(--orange); }
-    .step-screen { margin-top: 0.75rem; background: linear-gradient(135deg, #f0fdf6, #e6f9ef); border: 1px solid rgba(26,158,92,0.2); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.72rem; color: #2d6e4a; font-weight: 400; display: flex; align-items: center; gap: 0.6rem; }
+    .step-screen { margin-top: 0.75rem; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.72rem; font-weight: 400; display: flex; align-items: center; gap: 0.6rem; }
+    .step-screen.green  { background: linear-gradient(135deg, #f0fdf6, #e6f9ef); border: 1px solid rgba(26,158,92,0.2);  color: #2d6e4a; }
+    .step-screen.orange { background: linear-gradient(135deg, #fff8f0, #fff0e0); border: 1px solid rgba(224,123,42,0.2); color: #7a4010; }
+    .step-screen.blue   { background: linear-gradient(135deg, #f0f5ff, #e6eeff); border: 1px solid rgba(37,99,196,0.2);  color: #1a3a80; }
     .step-screen-icon { font-size: 1rem; flex-shrink: 0; }
     .tip-box, .warn-box { border-radius: 12px; padding: 0.9rem 1rem; display: flex; gap: 0.7rem; align-items: flex-start; margin: 0.5rem 0 1.2rem; }
     .tip-box { background: var(--yellow-bg); border: 1px solid rgba(217,119,6,0.2); }
@@ -148,14 +182,32 @@
     .tip-text { font-size: 0.75rem; line-height: 1.7; color: #78350f; font-weight: 300; }
     .warn-text { font-size: 0.75rem; line-height: 1.7; color: #1e3a8a; font-weight: 300; }
     .tip-text strong, .warn-text strong { font-weight: 600; }
-    .summary-box { background: linear-gradient(135deg, #f0fdf6, #e8faf2); border: 1px solid rgba(26,158,92,0.25); border-radius: 14px; padding: 1.1rem; margin: 1.2rem 0; }
-    .summary-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 0.75rem; }
+    .summary-box { border-radius: 14px; padding: 1.1rem; margin: 1.2rem 0; }
+    .summary-box.green  { background: linear-gradient(135deg, #f0fdf6, #e8faf2); border: 1px solid rgba(26,158,92,0.25); }
+    .summary-box.orange { background: linear-gradient(135deg, #fff8f0, #fff0e0); border: 1px solid rgba(224,123,42,0.25); }
+    .summary-box.blue   { background: linear-gradient(135deg, #f0f5ff, #e6eeff); border: 1px solid rgba(37,99,196,0.25); }
+    .summary-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .summary-title.green  { color: var(--green); }
+    .summary-title.orange { color: var(--orange); }
+    .summary-title.blue   { color: var(--blue); }
     .check-item { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.77rem; line-height: 1.6; color: #374151; font-weight: 300; margin-bottom: 0.45rem; }
     .check-item:last-child { margin-bottom: 0; }
-    .check-icon { color: var(--green); font-size: 0.85rem; flex-shrink: 0; margin-top: 1px; }
-    .article-cta { display: block; width: 100%; background: linear-gradient(135deg, #1a9e5c, #15834d); color: #fff; text-decoration: none; border-radius: 14px; padding: 1rem 1.2rem; text-align: center; font-size: 0.88rem; font-weight: 700; box-shadow: 0 4px 20px rgba(26,158,92,0.3); transition: box-shadow 0.2s, transform 0.15s; margin-top: 1.3rem; }
-    .article-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,158,92,0.4); }
+    .check-icon { font-size: 0.85rem; flex-shrink: 0; margin-top: 1px; }
+    .check-icon.green  { color: var(--green); }
+    .check-icon.orange { color: var(--orange); }
+    .check-icon.blue   { color: var(--blue); }
+    .article-cta { display: block; width: 100%; color: #fff; text-decoration: none; border-radius: 14px; padding: 1rem 1.2rem; text-align: center; font-size: 0.88rem; font-weight: 700; transition: box-shadow 0.2s, transform 0.15s; margin-top: 1.3rem; }
+    .article-cta:hover { transform: translateY(-2px); }
+    .article-cta.green  { background: linear-gradient(135deg, #1a9e5c, #15834d); box-shadow: 0 4px 20px rgba(26,158,92,0.3); }
+    .article-cta.green:hover  { box-shadow: 0 8px 28px rgba(26,158,92,0.4); }
+    .article-cta.orange { background: linear-gradient(135deg, #e07b2a, #c4631a); box-shadow: 0 4px 20px rgba(224,123,42,0.3); }
+    .article-cta.orange:hover { box-shadow: 0 8px 28px rgba(224,123,42,0.4); }
+    .article-cta.blue   { background: linear-gradient(135deg, #2563c4, #1a4fa8); box-shadow: 0 4px 20px rgba(37,99,196,0.3); }
+    .article-cta.blue:hover   { box-shadow: 0 8px 28px rgba(37,99,196,0.4); }
     .article-cta-sub { font-size: 0.68rem; font-weight: 300; opacity: 0.8; margin-top: 0.25rem; display: block; }
+
+    /* BLOG GRID — 2 mini preview cards below the section label */
+    .blog-grid { width: 100%; display: flex; flex-direction: column; gap: 0.7rem; }
 
     .foot { margin-top: 2.5rem; font-size: 0.67rem; color: #c0c8d4; text-align: center; letter-spacing: 0.06em; }
 
@@ -215,8 +267,7 @@
 
   <div class="section-label">✍️ Guide · Investissement</div>
   <div class="article-card" id="article">
-
-    <div class="article-hero">
+    <div class="article-hero green">
       <div class="article-hero-tags">
         <span class="hero-tag">Débutant</span>
         <span class="hero-tag">CELI</span>
@@ -230,15 +281,14 @@
       </div>
     </div>
 
-    <button class="article-toggle" id="toggle-btn">
+    <button class="article-toggle green" id="toggle-btn">
       <span id="toggle-label">Lire le guide complet</span>
-      <span class="toggle-icon">▼</span>
+      <span class="toggle-icon green">▼</span>
     </button>
 
     <div class="article-body">
       <div class="article-inner">
-
-        <p class="article-intro">
+        <p class="article-intro green">
           Wealthsimple est la plateforme d'investissement la plus populaire au Canada. Zéro commission, interface simple, et des comptes enregistrés comme le CELI et le REER accessibles en quelques clics. Voici comment ouvrir votre compte de A à Z, sans jargon.
         </p>
 
@@ -266,41 +316,40 @@
 
         <hr class="article-divider" />
         <div class="steps-heading">📋 Les étapes détaillées</div>
-
         <div class="step-list">
 
           <div class="step">
-            <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+            <div class="step-left"><div class="step-num green">1</div><div class="step-line green"></div></div>
             <div class="step-content">
               <div class="step-title">Cliquez sur le lien de parrainage</div>
               <div class="step-desc">Commencez toujours par le lien de parrainage pour obtenir votre bonus. <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" style="color:var(--green);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Cliquez ici pour obtenir 25 $ de bonus</a> — le lien est automatiquement appliqué à votre inscription.</div>
-              <div class="step-screen"><span class="step-screen-icon">🎁</span>En utilisant ce lien, vous et moi recevons chacun <strong>25 $</strong> une fois votre premier dépôt effectué.</div>
+              <div class="step-screen green"><span class="step-screen-icon">🎁</span>En utilisant ce lien, vous et moi recevons chacun <strong>25 $</strong> une fois votre premier dépôt effectué.</div>
             </div>
           </div>
 
           <div class="step">
-            <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+            <div class="step-left"><div class="step-num green">2</div><div class="step-line green"></div></div>
             <div class="step-content">
               <div class="step-title">Créez votre compte — Inscription</div>
               <div class="step-desc">Sur la page d'accueil, cliquez sur <strong>« S'inscrire »</strong>. Vous aurez le choix entre :</div>
               <div class="step-bullets">
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Continuer avec <strong>votre adresse courriel</strong> (recommandé)</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Continuer avec <strong>Apple</strong> ou <strong>Google</strong></span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>Continuer avec <strong>votre adresse courriel</strong> (recommandé)</span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>Continuer avec <strong>Apple</strong> ou <strong>Google</strong></span></div>
               </div>
-              <div class="step-desc" style="margin-top:0.6rem;">Choisissez un mot de passe fort (au moins 8 caractères, avec majuscule et chiffre). Wealthsimple vous enverra un courriel de confirmation — cliquez sur le lien pour activer votre compte.</div>
+              <div class="step-desc" style="margin-top:0.6rem;">Choisissez un mot de passe fort. Wealthsimple vous enverra un courriel de confirmation — cliquez sur le lien pour activer votre compte.</div>
             </div>
           </div>
 
           <div class="step">
-            <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+            <div class="step-left"><div class="step-num green">3</div><div class="step-line green"></div></div>
             <div class="step-content">
               <div class="step-title">Renseignez vos informations personnelles</div>
               <div class="step-desc">Wealthsimple est une institution financière réglementée — elle doit vérifier votre identité. Vous aurez besoin de :</div>
               <div class="step-bullets">
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Votre <strong>nom complet</strong> et date de naissance</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Votre <strong>adresse résidentielle</strong> au Canada</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Votre <strong>numéro de téléphone</strong></span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Votre <strong>numéro d'assurance sociale (NAS)</strong> — requis pour les comptes enregistrés CELI et REER</span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>Votre <strong>nom complet</strong> et date de naissance</span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>Votre <strong>adresse résidentielle</strong> au Canada</span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>Votre <strong>numéro de téléphone</strong></span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>Votre <strong>numéro d'assurance sociale (NAS)</strong> — requis pour les comptes enregistrés CELI et REER</span></div>
               </div>
               <div class="tip-box" style="margin-top:0.75rem;margin-bottom:0;">
                 <span class="tip-icon">🔒</span>
@@ -310,102 +359,52 @@
           </div>
 
           <div class="step">
-            <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+            <div class="step-left"><div class="step-num green">4</div><div class="step-line green"></div></div>
             <div class="step-content">
               <div class="step-title">Vérifiez votre identité (2 minutes)</div>
               <div class="step-desc">Wealthsimple utilise une vérification automatique par photo. Préparez l'un de ces documents :</div>
               <div class="step-bullets">
-                <div class="step-bullet"><div class="bullet-dot"></div><span>🪪 <strong>Permis de conduire</strong> canadien (recto-verso)</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>📘 <strong>Passeport</strong> (page principale)</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>🪪 <strong>Carte d'identité provinciale</strong></span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>🪪 <strong>Permis de conduire</strong> canadien (recto-verso)</span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>📘 <strong>Passeport</strong> (page principale)</span></div>
+                <div class="step-bullet"><div class="bullet-dot green"></div><span>🪪 <strong>Carte d'identité provinciale</strong></span></div>
               </div>
-              <div class="step-desc" style="margin-top:0.6rem;">Utilisez l'appareil photo de votre téléphone directement dans l'application. Assurez-vous d'être dans une bonne lumière et que le document soit bien lisible. La vérification est automatique et prend moins de 2 minutes.</div>
             </div>
           </div>
 
           <div class="step">
-            <div class="step-left"><div class="step-num">5</div><div class="step-line"></div></div>
+            <div class="step-left"><div class="step-num green">5</div><div class="step-line green"></div></div>
             <div class="step-content">
               <div class="step-title">Répondez au questionnaire investisseur</div>
-              <div class="step-desc">Wealthsimple vous posera quelques questions pour évaluer votre profil :</div>
-              <div class="step-bullets">
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Votre <strong>objectif d'investissement</strong> (retraite, achat immobilier, épargne générale…)</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Votre <strong>tolérance au risque</strong> (prudent, modéré, audacieux)</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Votre <strong>horizon de placement</strong> (combien d'années avant de retirer l'argent)</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Votre <strong>situation financière</strong> (revenus approximatifs, valeur nette)</span></div>
-              </div>
-              <div class="step-desc" style="margin-top:0.6rem;">Ces réponses servent à vous recommander un portefeuille adapté. Vous pouvez modifier votre profil à tout moment après l'ouverture du compte.</div>
+              <div class="step-desc">Wealthsimple vous posera quelques questions pour évaluer votre profil : objectif, tolérance au risque, horizon de placement et situation financière. Ces réponses servent à vous recommander un portefeuille adapté.</div>
             </div>
           </div>
 
           <div class="step">
-            <div class="step-left"><div class="step-num">6</div><div class="step-line"></div></div>
+            <div class="step-left"><div class="step-num green">6</div><div class="step-line green"></div></div>
             <div class="step-content">
               <div class="step-title">Choisissez votre type de compte</div>
-              <div class="step-desc">C'est ici que vous sélectionnez <span class="step-badge">CELI</span> ou <span class="step-badge blue">REER</span> (ou les deux). Voici comment choisir :</div>
-              <div class="step-bullets">
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Choisissez le <strong>CELI</strong> si vous débutez, si vous êtes jeune, ou si vous voulez pouvoir retirer sans pénalité à tout moment.</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Choisissez le <strong>REER</strong> si vous avez un revenu élevé et voulez réduire vos impôts cette année — vos cotisations sont déductibles.</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Choisissez <strong>les deux</strong> si vous avez maximisé votre CELI ou si vous souhaitez diversifier vos stratégies fiscales.</span></div>
-              </div>
-              <div class="step-screen" style="margin-top:0.75rem;"><span class="step-screen-icon">💡</span>Droits de cotisation CELI 2024 : <strong>7 000 $ / an</strong>. Droits REER : <strong>18 % de votre revenu</strong> de l'année précédente (max. 31 560 $).</div>
+              <div class="step-desc">C'est ici que vous sélectionnez <span class="step-badge green">CELI</span> ou <span class="step-badge blue">REER</span> (ou les deux).</div>
+              <div class="step-screen green" style="margin-top:0.75rem;"><span class="step-screen-icon">💡</span>Droits CELI 2024 : <strong>7 000 $ / an</strong>. Droits REER : <strong>18 % de votre revenu</strong> de l'année précédente.</div>
             </div>
           </div>
 
           <div class="step">
-            <div class="step-left"><div class="step-num">7</div><div class="step-line"></div></div>
+            <div class="step-left"><div class="step-num green">7</div><div class="step-line green"></div></div>
             <div class="step-content">
-              <div class="step-title">Choisissez votre produit : Invest ou Trade</div>
-              <div class="step-desc">Wealthsimple propose deux façons d'investir :</div>
-              <div class="step-bullets">
-                <div class="step-bullet"><div class="bullet-dot"></div><span><strong>Wealthsimple Invest</strong> — portefeuille géré automatiquement. Vous choisissez votre niveau de risque et l'algorithme investit à votre place dans des FNB diversifiés. <span class="step-badge">Recommandé pour débuter</span></span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span><strong>Wealthsimple Trade</strong> — vous investissez vous-même en achetant des actions et FNB à la bourse. Zéro commission. <span class="step-badge orange">Pour les plus autonomes</span></span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="step">
-            <div class="step-left"><div class="step-num">8</div><div class="step-line"></div></div>
-            <div class="step-content">
-              <div class="step-title">Connectez votre compte bancaire</div>
-              <div class="step-desc">Pour effectuer votre premier dépôt, vous devez relier votre banque canadienne. Deux options :</div>
-              <div class="step-bullets">
-                <div class="step-bullet"><div class="bullet-dot"></div><span><strong>Connexion instantanée</strong> — entrez vos identifiants bancaires directement (Wealthsimple utilise Plaid, un service sécurisé). Dépôt disponible en 1–2 jours.</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span><strong>Connexion manuelle</strong> — entrez votre numéro d'institution, de transit et de compte (trouvés sur un chèque ou dans votre application bancaire). Dépôt disponible en 3–5 jours ouvrables.</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="step">
-            <div class="step-left"><div class="step-num">9</div><div class="step-line"></div></div>
-            <div class="step-content">
-              <div class="step-title">Effectuez votre premier dépôt</div>
-              <div class="step-desc">Il n'y a <strong>aucun minimum requis</strong> pour ouvrir un compte chez Wealthsimple. Même 1 $ suffit pour commencer. Cependant, pour débloquer votre bonus de 25 $, un premier dépôt est nécessaire.</div>
-              <div class="step-bullets">
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Entrez le montant souhaité (ex. : 100 $, 500 $, 1 000 $)</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Confirmez le transfert — l'argent sera investi automatiquement selon votre portefeuille</span></div>
-                <div class="step-bullet"><div class="bullet-dot"></div><span>Activez les <strong>dépôts automatiques</strong> mensuels pour investir sans y penser</span></div>
-              </div>
+              <div class="step-title">Connectez votre banque et effectuez votre premier dépôt</div>
+              <div class="step-desc">Reliez votre compte bancaire canadien et déposez le montant de votre choix — <strong>aucun minimum requis</strong>. Activez les dépôts automatiques mensuels pour investir sans y penser.</div>
               <div class="tip-box" style="margin-top:0.75rem;margin-bottom:0;">
                 <span class="tip-icon">💡</span>
-                <span class="tip-text"><strong>Conseil de Hamza :</strong> Commencez avec ce que vous avez, même 50 $/mois. L'important c'est la régularité, pas le montant. Les intérêts composés font le reste avec le temps.</span>
+                <span class="tip-text"><strong>Conseil de Hamza :</strong> Commencez avec ce que vous avez, même 50 $/mois. L'important c'est la régularité, pas le montant.</span>
               </div>
             </div>
           </div>
 
           <div class="step">
-            <div class="step-left"><div class="step-num">10</div><div class="step-line"></div></div>
-            <div class="step-content">
-              <div class="step-title">Activez la double authentification (2FA)</div>
-              <div class="step-desc">Pour sécuriser votre compte, activez la <strong>vérification en deux étapes</strong> dans les paramètres. À chaque connexion, Wealthsimple vous enverra un code SMS ou via une application d'authentification. Cette étape est fortement recommandée pour protéger vos investissements.</div>
-            </div>
-          </div>
-
-          <div class="step">
-            <div class="step-left"><div class="step-num">11</div></div>
+            <div class="step-left"><div class="step-num green">8</div></div>
             <div class="step-content">
               <div class="step-title">Vous êtes prêt à investir ! 🎉</div>
-              <div class="step-desc">Votre compte est ouvert, votre premier dépôt est en route, et votre argent commence à travailler pour vous. Consultez votre tableau de bord régulièrement et restez investi sur le long terme — c'est là que la magie opère.</div>
+              <div class="step-desc">Votre compte est ouvert, votre premier dépôt est en route, et votre argent commence à travailler pour vous.</div>
             </div>
           </div>
 
@@ -413,24 +412,189 @@
 
         <hr class="article-divider" />
 
-        <div class="summary-box">
-          <div class="summary-title">✅ Récapitulatif — Ce dont vous avez besoin</div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Une adresse courriel valide</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Une pièce d'identité (permis ou passeport)</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Votre numéro d'assurance sociale (NAS)</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Les coordonnées de votre compte bancaire canadien</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>10 minutes de votre temps</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Le lien de parrainage pour obtenir vos 25 $ bonus</span></div>
+        <div class="summary-box green">
+          <div class="summary-title green">✅ Récapitulatif — Ce dont vous avez besoin</div>
+          <div class="check-item"><span class="check-icon green">✓</span><span>Une adresse courriel valide</span></div>
+          <div class="check-item"><span class="check-icon green">✓</span><span>Une pièce d'identité (permis ou passeport)</span></div>
+          <div class="check-item"><span class="check-icon green">✓</span><span>Votre numéro d'assurance sociale (NAS)</span></div>
+          <div class="check-item"><span class="check-icon green">✓</span><span>Les coordonnées de votre compte bancaire canadien</span></div>
+          <div class="check-item"><span class="check-icon green">✓</span><span>10 minutes de votre temps</span></div>
+          <div class="check-item"><span class="check-icon green">✓</span><span>Le lien de parrainage pour obtenir vos 25 $ bonus</span></div>
         </div>
 
-        <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="article-cta">
+        <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="article-cta green">
           Ouvrir mon compte Wealthsimple maintenant
           <span class="article-cta-sub">Bonus de 25 $ avec ce lien · Zéro commission · 100 % gratuit</span>
         </a>
-
       </div>
     </div>
   </div>
+
+  <!-- ═══════════════════════════════════════════════
+       NEW: BLOG SECTION
+  ════════════════════════════════════════════════ -->
+  <div class="section-label">📝 Blog · Articles</div>
+  <div class="blog-grid">
+
+    <!-- Article 1 — Assurances (orange) -->
+    <div class="article-card" id="blog-1">
+      <div class="article-hero orange">
+        <div class="article-hero-tags">
+          <span class="hero-tag">Assurance</span>
+          <span class="hero-tag">Économies</span>
+          <span class="hero-tag">Auto</span>
+        </div>
+        <div class="article-hero-title">5 erreurs qui font exploser votre prime d'assurance auto au Québec</div>
+        <div class="article-hero-meta">
+          <span>✍️ Hamza Tahraoui</span>
+          <span>⏱ 5 min de lecture</span>
+        </div>
+      </div>
+
+      <button class="article-toggle orange" onclick="toggleArticle('blog-1', this)">
+        <span>Lire l'article</span>
+        <span class="toggle-icon orange">▼</span>
+      </button>
+
+      <div class="article-body">
+        <div class="article-inner">
+          <p class="article-intro orange">
+            Beaucoup de conducteurs paient trop cher leur assurance auto sans le savoir. Voici les 5 erreurs les plus fréquentes — et comment les éviter pour économiser des centaines de dollars par année.
+          </p>
+
+          <div class="step-list">
+            <div class="step">
+              <div class="step-left"><div class="step-num orange">1</div><div class="step-line orange"></div></div>
+              <div class="step-content">
+                <div class="step-title">Ne pas magasiner sa prime chaque année</div>
+                <div class="step-desc">Le marché évolue constamment. Un assureur compétitif cette année peut ne plus l'être l'an prochain. <strong>Comparer les soumissions annuellement</strong> peut vous faire économiser 200 $ à 600 $ sans changer votre couverture.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num orange">2</div><div class="step-line orange"></div></div>
+              <div class="step-content">
+                <div class="step-title">Choisir une franchise trop basse</div>
+                <div class="step-desc">Une franchise de 250 $ coûte beaucoup plus cher en prime qu'une franchise de 1 000 $. Si vous êtes un conducteur prudent, <strong>augmenter votre franchise</strong> et mettre la différence de côté est souvent la meilleure stratégie.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num orange">3</div><div class="step-line orange"></div></div>
+              <div class="step-content">
+                <div class="step-title">Oublier les rabais disponibles</div>
+                <div class="step-desc">Rabais multi-véhicules, regroupement auto + habitation, télématique, conduite sans accident… La plupart des assurés laissent des rabais sur la table simplement par méconnaissance. <strong>Demandez à votre conseiller</strong> tous les rabais auxquels vous avez droit.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num orange">4</div><div class="step-line orange"></div></div>
+              <div class="step-content">
+                <div class="step-title">Déclarer un usage professionnel inutilement</div>
+                <div class="step-desc">Si vous utilisez votre véhicule occasionnellement pour le travail, vérifiez si cela modifie réellement votre prime. Dans beaucoup de cas, <strong>l'usage « plaisir »</strong> suffit et coûte moins cher.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num orange">5</div></div>
+              <div class="step-content">
+                <div class="step-title">Ne pas signaler les changements de situation</div>
+                <div class="step-desc">Déménagement, retraite, télétravail, moins de kilomètres annuels… Ces changements peuvent <strong>réduire significativement votre prime</strong>. Signalez-les à votre assureur dès qu'ils surviennent.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <span class="tip-text"><strong>Conseil de Hamza :</strong> Appelez-moi directement au 438-771-1845 — je compare plusieurs assureurs pour vous trouver la meilleure prime en quelques minutes, gratuitement.</span>
+          </div>
+
+          <a href="tel:4387711845" class="article-cta orange">
+            Obtenir une soumission gratuite
+            <span class="article-cta-sub">Réponse rapide · Aucun engagement · 438-771-1845</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article 2 — Banque / Crédit (blue) -->
+    <div class="article-card" id="blog-2">
+      <div class="article-hero blue">
+        <div class="article-hero-tags">
+          <span class="hero-tag">Crédit</span>
+          <span class="hero-tag">Débutant</span>
+          <span class="hero-tag">Canada</span>
+        </div>
+        <div class="article-hero-title">Comment bâtir votre crédit au Canada dès votre arrivée</div>
+        <div class="article-hero-meta">
+          <span>✍️ Hamza Tahraoui</span>
+          <span>⏱ 4 min de lecture</span>
+        </div>
+      </div>
+
+      <button class="article-toggle blue" onclick="toggleArticle('blog-2', this)">
+        <span>Lire l'article</span>
+        <span class="toggle-icon blue">▼</span>
+      </button>
+
+      <div class="article-body">
+        <div class="article-inner">
+          <p class="article-intro blue">
+            Arriver au Canada sans historique de crédit, c'est repartir de zéro. Mais avec les bonnes stratégies, vous pouvez bâtir un excellent dossier en 12 à 18 mois — et accéder à de meilleures conditions pour vos assurances, votre logement et vos prêts.
+          </p>
+
+          <div class="step-list">
+            <div class="step">
+              <div class="step-left"><div class="step-num blue">1</div><div class="step-line blue"></div></div>
+              <div class="step-content">
+                <div class="step-title">Ouvrir un compte bancaire canadien</div>
+                <div class="step-desc">C'est la base. Un compte chèque actif montre aux institutions que vous êtes établi au Canada. Le <strong>compte Nouveaux Arrivants CIBC</strong> est gratuit et ne requiert pas d'historique de crédit.</div>
+                <div class="step-screen blue" style="margin-top:0.6rem;"><span class="step-screen-icon">🏦</span>Lien CIBC disponible dans la section Banque ci-dessus.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num blue">2</div><div class="step-line blue"></div></div>
+              <div class="step-content">
+                <div class="step-title">Demander une carte de crédit garantie</div>
+                <div class="step-desc">Une carte garantie (secured credit card) nécessite un dépôt initial comme garantie. Utilisez-la chaque mois pour de petites dépenses et <strong>remboursez le solde en entier</strong> — votre cote de crédit montera rapidement.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num blue">3</div><div class="step-line blue"></div></div>
+              <div class="step-content">
+                <div class="step-title">Payer toutes vos factures à temps</div>
+                <div class="step-desc">Téléphone, Internet, loyer si possible — <strong>le paiement ponctuel est le facteur numéro 1</strong> de votre cote de crédit. Configurez des paiements automatiques pour ne jamais manquer une échéance.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num blue">4</div><div class="step-line blue"></div></div>
+              <div class="step-content">
+                <div class="step-title">Garder votre taux d'utilisation bas</div>
+                <div class="step-desc">N'utilisez jamais plus de <strong>30 % de votre limite de crédit</strong> disponible. Si votre limite est 500 $, essayez de ne pas dépasser 150 $ de solde.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num blue">5</div></div>
+              <div class="step-content">
+                <div class="step-title">Surveiller votre dossier gratuitement</div>
+                <div class="step-desc">Utilisez <strong>Borrowell ou Credit Karma</strong> pour consulter votre cote Equifax gratuitement chaque semaine — sans impact sur votre crédit.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-box blue">
+            <div class="summary-title blue">📊 Délais réalistes</div>
+            <div class="check-item"><span class="check-icon blue">✓</span><span>6 mois : première cote de crédit établie</span></div>
+            <div class="check-item"><span class="check-icon blue">✓</span><span>12 mois : accès aux cartes de crédit régulières</span></div>
+            <div class="check-item"><span class="check-icon blue">✓</span><span>18–24 mois : cote « bonne » (680+)</span></div>
+          </div>
+
+          <a href="https://www.cibconline.cibc.com/ebm-resources/public/cibc-referral-app/client/index.html#/welcome?locale=fr&xref=11117111618704420990&utrc=E2358:1" target="_blank" rel="noopener" class="article-cta blue">
+            Ouvrir un compte CIBC gratuitement
+            <span class="article-cta-sub">Compte Nouveaux Arrivants · Sans frais · Idéal pour débuter</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- END BLOG SECTION -->
 
   <div class="section-label">☕ Soutenir</div>
   <a href="https://www.buymeacoffee.com/" target="_blank" rel="noopener" class="coffee-card">
@@ -454,19 +618,26 @@
 </div>
 
 <script>
+  // Original Wealthsimple guide toggle
   document.addEventListener('DOMContentLoaded', function() {
     var btn   = document.getElementById('toggle-btn');
-    var label = document.getElementById('toggle-label');
     var card  = document.getElementById('article');
     if (btn) {
       btn.addEventListener('click', function() {
         card.classList.toggle('open');
-        label.textContent = card.classList.contains('open')
-          ? 'Réduire le guide'
-          : 'Lire le guide complet';
+        var label = btn.querySelector('span:first-child');
+        label.textContent = card.classList.contains('open') ? 'Réduire le guide' : 'Lire le guide complet';
       });
     }
   });
+
+  // Generic toggle for new blog articles
+  function toggleArticle(id, btn) {
+    var card = document.getElementById(id);
+    card.classList.toggle('open');
+    var label = btn.querySelector('span:first-child');
+    label.textContent = card.classList.contains('open') ? 'Réduire l\'article' : 'Lire l\'article';
+  }
 </script>
 </body>
 </html>
