@@ -220,6 +220,121 @@
 
     .blog-grid { width: 100%; display: flex; flex-direction: column; gap: 0.7rem; }
 
+    /* ── VIEWERS COUNTER ── */
+    .viewers-section {
+      width: 100%;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      animation: rise 0.45s 0.52s ease both;
+    }
+    .viewers-card {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .viewers-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26,158,92,0.03), rgba(37,99,196,0.03), rgba(224,123,42,0.03));
+      pointer-events: none;
+    }
+    .viewers-live-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      position: relative;
+    }
+    .viewers-live-dot::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: rgba(26,158,92,0.3);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.6); opacity: 0; }
+    }
+    .viewers-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+    }
+    .viewers-count-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+    .viewers-number {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .viewers-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .viewers-sub {
+      font-size: 0.62rem;
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+    .viewers-total-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6rem;
+      width: 100%;
+      margin-top: 0.15rem;
+    }
+    .viewers-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.1rem;
+    }
+    .viewers-stat-num {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    .viewers-stat-label {
+      font-size: 0.58rem;
+      color: var(--muted);
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .viewers-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--border);
+    }
+
     .foot { margin-top: 2.5rem; font-size: 0.67rem; color: #c0c8d4; text-align: center; letter-spacing: 0.06em; }
 
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
@@ -568,6 +683,36 @@
     </div>
   </a>
 
+  <!-- ── VIEWERS COUNT ── -->
+  <div class="viewers-section">
+    <div class="viewers-card">
+      <div class="viewers-live-dot"></div>
+      <div class="viewers-info">
+        <div class="viewers-count-row">
+          <span class="viewers-number" id="total-views">—</span>
+          <span class="viewers-label">visiteurs</span>
+        </div>
+        <div class="viewers-sub">Compteur mis à jour en temps réel</div>
+      </div>
+    </div>
+    <div class="viewers-total-row">
+      <div class="viewers-stat">
+        <span class="viewers-stat-num" id="today-views">—</span>
+        <span class="viewers-stat-label">Aujourd'hui</span>
+      </div>
+      <div class="viewers-divider"></div>
+      <div class="viewers-stat">
+        <span class="viewers-stat-num" id="week-views">—</span>
+        <span class="viewers-stat-label">Cette semaine</span>
+      </div>
+      <div class="viewers-divider"></div>
+      <div class="viewers-stat">
+        <span class="viewers-stat-num" id="month-views">—</span>
+        <span class="viewers-stat-label">Ce mois</span>
+      </div>
+    </div>
+  </div>
+
   <div class="foot">© 2025 Hamza · Québec, Canada</div>
 </div>
 
@@ -609,7 +754,6 @@
         ? H * (0.2 + Math.random() * 0.7)
         : H * (0.75 + Math.random() * 0.25);
 
-      /* Rising trend: each bar is higher than the last */
       this.heights = [];
       let h = 10 + Math.random() * 30;
       for (let i = 0; i < this.bars; i++) {
@@ -618,7 +762,6 @@
       }
       this.maxH = Math.max(...this.heights);
 
-      /* Animation */
       this.progress   = initial ? Math.random() : 0;
       this.speed      = 0.003 + Math.random() * 0.005;
       this.floatSpeed = 0.0003 + Math.random() * 0.0006;
@@ -629,17 +772,15 @@
       this.age        = 0;
       this.life       = 400 + Math.random() * 600;
 
-      /* Color — green / blue / orange palette matching site */
       const palettes = [
-        { r: 26,  g: 158, b: 92  },   // green
-        { r: 37,  g: 99,  b: 196 },   // blue
-        { r: 224, g: 123, b: 42  },   // orange
-        { r: 26,  g: 158, b: 92  },   // green (weighted)
-        { r: 26,  g: 158, b: 92  },   // green (weighted)
+        { r: 26,  g: 158, b: 92  },
+        { r: 37,  g: 99,  b: 196 },
+        { r: 224, g: 123, b: 42  },
+        { r: 26,  g: 158, b: 92  },
+        { r: 26,  g: 158, b: 92  },
       ];
       this.color = palettes[Math.floor(Math.random() * palettes.length)];
 
-      /* Line overlay */
       this.showLine = Math.random() > 0.4;
     }
 
@@ -648,12 +789,10 @@
       if (this.progress < 1) this.progress = Math.min(1, this.progress + this.speed);
       this.floatPhase += this.floatSpeed;
 
-      /* Fade in / out */
       if (this.age < 60)        this.opacity = Math.min(1, this.age / 60);
       else if (this.age > this.life - 60) this.opacity = Math.max(0, (this.life - this.age) / 60);
       else                      this.opacity = 1;
 
-      /* Mouse proximity glow */
       const cx = this.x + this.width / 2;
       const cy = this.baseY;
       const dist = Math.hypot(mouseX - cx, mouseY - cy);
@@ -670,14 +809,12 @@
 
       ctx.save();
 
-      /* Draw bars */
       for (let i = 0; i < this.bars; i++) {
         const barProgress = Math.max(0, Math.min(1, (eased * this.bars - i) ));
         const targetH = this.heights[i] * barProgress;
         const bx = this.x + i * (this.barW + this.barGap);
         const by = this.baseY + floatY;
 
-        /* Bar fill */
         const barAlpha = alpha * (0.5 + 0.5 * (i / this.bars));
         ctx.fillStyle = `rgba(${r},${g},${b},${barAlpha})`;
         ctx.beginPath();
@@ -686,14 +823,12 @@
           : ctx.rect(bx, by - targetH, this.barW, targetH);
         ctx.fill();
 
-        /* Top highlight */
         if (targetH > 4) {
           ctx.fillStyle = `rgba(${r},${g},${b},${alpha * 1.6})`;
           ctx.fillRect(bx, by - targetH, this.barW, 2);
         }
       }
 
-      /* Line chart overlay */
       if (this.showLine && eased > 0.05) {
         ctx.beginPath();
         let started = false;
@@ -710,7 +845,6 @@
         ctx.lineJoin    = 'round';
         ctx.stroke();
 
-        /* Dot at the last visible bar */
         const lastIdx = Math.min(this.bars - 1, Math.floor(eased * this.bars));
         const lp = Math.max(0, Math.min(1, eased * this.bars - lastIdx));
         if (lp > 0) {
@@ -729,7 +863,6 @@
 
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
-  /* ── Grid lines (subtle) ── */
   function drawGrid(t) {
     const rows = 6;
     ctx.strokeStyle = 'rgba(26,158,92,0.03)';
@@ -743,7 +876,6 @@
     }
   }
 
-  /* ── Floating particles (tiny dots) ── */
   class Particle {
     constructor() { this.reset(); }
     reset() {
@@ -773,16 +905,13 @@
     }
   }
 
-  /* ── Init ── */
   const CHART_COUNT = 12;
   const PARTICLE_COUNT = 40;
   const charts    = Array.from({ length: CHART_COUNT },    () => new Chart());
   const particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
 
-  /* ── Render loop ── */
   let t = 0;
   function loop() {
-    /* Resize canvas height if page got longer */
     const scrollH = document.body.scrollHeight;
     if (canvas.height !== scrollH) {
       canvas.height = scrollH;
@@ -791,7 +920,6 @@
 
     ctx.clearRect(0, 0, W, H);
 
-    /* Base gradient wash */
     const grad = ctx.createLinearGradient(0, 0, 0, H);
     grad.addColorStop(0,   'rgba(247,243,238,0)');
     grad.addColorStop(0.5, 'rgba(237,250,243,0.25)');
@@ -830,6 +958,64 @@ function toggleArticle(id, btn) {
   var label = btn.querySelector('span:first-child');
   label.textContent = card.classList.contains('open') ? "Réduire l'article" : "Lire l'article";
 }
+
+/* ══════════════════════════════════════════════
+   VIEWERS COUNTER — localStorage-based tracker
+   ══════════════════════════════════════════════ */
+(function() {
+  const STORAGE_KEY = 'hamza_page_views';
+  const now = new Date();
+  const todayStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
+
+  // Load existing data
+  let data;
+  try {
+    data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (!data || !data.visits) throw new Error();
+  } catch {
+    data = { total: 0, visits: [] };
+  }
+
+  // Record this visit
+  data.total++;
+  data.visits.push(now.getTime());
+
+  // Keep only last 30 days of visit timestamps to avoid bloat
+  const thirtyDaysAgo = now.getTime() - (30 * 24 * 60 * 60 * 1000);
+  data.visits = data.visits.filter(ts => ts > thirtyDaysAgo);
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+  // Calculate stats
+  const todayStart = new Date(todayStr).getTime();
+  const weekAgo = now.getTime() - (7 * 24 * 60 * 60 * 1000);
+  const monthAgo = now.getTime() - (30 * 24 * 60 * 60 * 1000);
+
+  const todayCount = data.visits.filter(ts => ts >= todayStart).length;
+  const weekCount  = data.visits.filter(ts => ts >= weekAgo).length;
+  const monthCount = data.visits.filter(ts => ts >= monthAgo).length;
+
+  // Animate counter
+  function animateCount(el, target, duration) {
+    const start = performance.now();
+    const from = 0;
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(from + (target - from) * eased).toLocaleString('fr-CA');
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Display with a slight delay for the animation feel
+  setTimeout(() => {
+    animateCount(document.getElementById('total-views'), data.total, 1200);
+    animateCount(document.getElementById('today-views'), todayCount, 800);
+    animateCount(document.getElementById('week-views'), weekCount, 900);
+    animateCount(document.getElementById('month-views'), monthCount, 1000);
+  }, 600);
+})();
 </script>
 </body>
 </html>
