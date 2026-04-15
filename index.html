@@ -960,61 +960,71 @@ function toggleArticle(id, btn) {
 }
 
 /* ══════════════════════════════════════════════
-   VIEWERS COUNTER — localStorage-based tracker
+   VIEWERS COUNTER — CounterAPI.dev (shared across all visitors)
+   Free, no signup, works on Vercel free tier
    ══════════════════════════════════════════════ */
 (function() {
-  const STORAGE_KEY = 'hamza_page_views';
-  const now = new Date();
-  const todayStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
+  const NS   = 'hamza-assurance-qc';   // your unique namespace
+  const NAME = 'page-views';            // counter name
+  const API  = 'https://api.counterapi.dev/v1';
 
-  // Load existing data
-  let data;
-  try {
-    data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (!data || !data.visits) throw new Error();
-  } catch {
-    data = { total: 0, visits: [] };
-  }
-
-  // Record this visit
-  data.total++;
-  data.visits.push(now.getTime());
-
-  // Keep only last 30 days of visit timestamps to avoid bloat
-  const thirtyDaysAgo = now.getTime() - (30 * 24 * 60 * 60 * 1000);
-  data.visits = data.visits.filter(ts => ts > thirtyDaysAgo);
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-
-  // Calculate stats
-  const todayStart = new Date(todayStr).getTime();
-  const weekAgo = now.getTime() - (7 * 24 * 60 * 60 * 1000);
-  const monthAgo = now.getTime() - (30 * 24 * 60 * 60 * 1000);
-
-  const todayCount = data.visits.filter(ts => ts >= todayStart).length;
-  const weekCount  = data.visits.filter(ts => ts >= weekAgo).length;
-  const monthCount = data.visits.filter(ts => ts >= monthAgo).length;
-
-  // Animate counter
+  // Animate number from 0 to target
   function animateCount(el, target, duration) {
+    if (!el) return;
     const start = performance.now();
-    const from = 0;
     function tick(now) {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(from + (target - from) * eased).toLocaleString('fr-CA');
+      el.textContent = Math.round(target * eased).toLocaleString('fr-CA');
       if (progress < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
   }
 
-  // Display with a slight delay for the animation feel
-  setTimeout(() => {
-    animateCount(document.getElementById('total-views'), data.total, 1200);
-    animateCount(document.getElementById('today-views'), todayCount, 800);
-    animateCount(document.getElementById('week-views'), weekCount, 900);
-    animateCount(document.getElementById('month-views'), monthCount, 1000);
-  }, 600);
+  // 1) Increment total count (fires on every page load)
+  fetch(`${API}/${NS}/${NAME}/up`)
+    .then(r => r.json())
+    .then(data => {
+      const total = data?.data?.count ?? data?.count ?? 0;
+      setTimeout(() => animateCount(document.getElementById('total-views'), total, 1200), 400);
+    })
+    .catch(() => {
+      document.getElementById('total-views').textContent = '—';
+    });
+
+  // 2) Fetch daily breakdown for today / this week / this month
+  fetch(`${API}/${NS}/${NAME}/list?group_by=day&order_by=desc`)
+    .then(r => r.json())
+    .then(data => {
+      const items = data?.data ?? data?.items ?? [];
+      const now   = new Date();
+      const todayStr = now.toISOString().slice(0, 10);
+
+      let todayCount = 0, weekCount = 0, monthCount = 0;
+      const weekAgo  = new Date(now.getTime() - 7 * 86400000);
+      const monthAgo = new Date(now.getTime() - 30 * 86400000);
+
+      items.forEach(item => {
+        const d     = new Date(item.date || item.created_at || item.timestamp);
+        const count = item.count ?? item.up_count ?? item.value ?? 0;
+
+        if (item.date === todayStr || d.toISOString().slice(0, 10) === todayStr) todayCount += count;
+        if (d >= weekAgo)  weekCount  += count;
+        if (d >= monthAgo) monthCount += count;
+      });
+
+      setTimeout(() => {
+        animateCount(document.getElementById('today-views'), todayCount, 800);
+        animateCount(document.getElementById('week-views'),  weekCount,  900);
+        animateCount(document.getElementById('month-views'), monthCount, 1000);
+      }, 600);
+    })
+    .catch(() => {
+      ['today-views', 'week-views', 'month-views'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '—';
+      });
+    });
 })();
 </script>
 </body>
