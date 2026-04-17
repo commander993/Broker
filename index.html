@@ -4,712 +4,427 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hamza | Assurances &amp; Investissement</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #f7f3ee; --surface: #ffffff;
-      --border: rgba(0,0,0,0.07); --shadow: 0 2px 12px rgba(0,0,0,0.06);
-      --orange: #e07b2a; --orange-bg: #fff5ec;
-      --green: #1a9e5c; --green-bg: #edfaf3;
-      --blue: #2563c4; --blue-bg: #eef3fd;
-      --red: #c41e3a; --purple: #7c3aed; --purple-bg: #f3f0fd;
-      --yellow: #d97706; --yellow-bg: #fffbeb;
-      --text: #1a1f2e; --muted: #8a95a8;
-    }
-
-    /* ── BACKGROUND CANVAS ── */
-    #bg-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
+      --bg: #f5ebe4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fdfaf8;
+      --border: rgba(160,142,126,0.15);
+      --border-hover: rgba(160,142,126,0.3);
+      --text: #3a302a;
+      --text-dim: #8a7e74;
+      --text-faint: #a08e7e;
+      --green: #8aaa6e;
+      --green-dim: rgba(138,170,110,0.14);
+      --orange: #e08e80;
+      --orange-dim: rgba(224,142,128,0.12);
+      --blue: #7ea8c4;
+      --blue-dim: rgba(126,168,196,0.14);
+      --red: #c46b6b;
+      --red-dim: rgba(196,107,107,0.12);
+      --gold: #bfad82;
+      --gold-dim: rgba(191,173,130,0.15);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --font: 'DM Sans', -apple-system, sans-serif;
+      --serif: 'DM Serif Display', Georgia, serif;
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #f7f3ee;
+      font-family: var(--font);
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 3rem 1rem 4rem;
+      padding: 2.5rem 1rem 4rem;
       position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; top: -20%; left: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(191,173,130,0.12) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed; bottom: -10%; right: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(181,204,222,0.12) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
     }
 
-    .page {
-      width: 100%;
-      max-width: 440px;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .page { width: 100%; max-width: 460px; position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+
+    /* ── PROFILE ── */
+    .profile { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 2.8rem; padding-top: 1rem; text-align: center; }
+    .name {
+      font-family: var(--serif); font-size: 2.6rem; font-weight: 400; letter-spacing: -0.02em; line-height: 1.1;
+      background: linear-gradient(135deg, #3a302a 30%, #bfad82 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
+    .bio { font-size: 0.92rem; color: var(--text-dim); line-height: 1.75; max-width: 320px; font-weight: 300; }
+    .bio strong { color: var(--text); font-weight: 500; }
+    .location-tag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.68rem; color: var(--text-faint); letter-spacing: 0.14em; text-transform: uppercase; }
 
-    /* PROFILE */
-    .profile { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; margin-bottom: 2.5rem; padding-top: 0.5rem; }
-    .name { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; text-align: center; }
-    .bio { font-size: 0.88rem; color: #9ca3af; text-align: center; line-height: 1.7; max-width: 280px; font-weight: 300; letter-spacing: 0.01em; }
-    .location-tag { display: inline-flex; align-items: center; gap: 0.4rem; background: transparent; border: none; padding: 0; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; box-shadow: none; text-transform: uppercase; }
+    /* ── STATS ROW ── */
+    .stats-row { display: flex; width: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 0; margin-bottom: 2.2rem; }
+    .stat-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; position: relative; }
+    .stat-item:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 15%; height: 70%; width: 1px; background: var(--border); }
+    .stat-num { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--gold, #bfad82); }
+    .stat-label { font-size: 0.6rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; }
 
-    /* SECTION LABEL */
-    .section-label { width: 100%; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 1.6rem 0 0.7rem; padding-left: 4px; }
+    /* ── SECTION LABEL ── */
+    .section-label { width: 100%; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin: 2rem 0 0.8rem; padding-left: 4px; font-weight: 600; }
 
-    /* LINK CARD */
-    .link-card { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s; margin-bottom: 0.7rem; position: relative; overflow: hidden; box-shadow: var(--shadow); }
-    .link-card::after { content: '→'; position: absolute; right: 1.25rem; font-size: 1rem; color: #cbd5e1; transition: right 0.2s, color 0.2s; }
-    .link-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.1); border-color: rgba(224,123,42,0.3); }
+    /* ── LINK CARDS ── */
+    .link-card { width: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.3rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: all 0.25s ease; margin-bottom: 0.6rem; position: relative; overflow: hidden; box-shadow: 0 2px 10px rgba(160,142,126,0.06); }
+    .link-card::after { content: '→'; position: absolute; right: 1.3rem; font-size: 0.9rem; color: var(--text-faint); transition: all 0.25s ease; }
+    .link-card:hover { background: var(--bg-card-hover); border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(160,142,126,0.1); }
     .link-card:hover::after { right: 1rem; color: var(--orange); }
-    .card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
-    .icon-auto { background: var(--orange-bg); } .icon-home { background: var(--blue-bg); }
+    .card-icon { width: 44px; height: 44px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .icon-auto { background: var(--orange-dim); }
+    .icon-home { background: var(--blue-dim); }
     .card-text { flex: 1; }
-    .card-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.2rem; }
-    .card-sub { font-size: 0.73rem; color: var(--muted); font-weight: 300; }
+    .card-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .card-sub { font-size: 0.72rem; color: var(--text-dim); font-weight: 300; }
 
-    /* SPECIAL CARDS */
-    .special-card { width: 100%; border-radius: 16px; padding: 1.25rem 1.25rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: box-shadow 0.2s, transform 0.15s; margin-bottom: 0.7rem; position: relative; overflow: hidden; box-shadow: var(--shadow); }
-    .special-card::after { content: '→'; position: absolute; right: 1.25rem; font-size: 1rem; transition: right 0.2s; }
-    .special-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
+    /* ── SPECIAL CARDS ── */
+    .special-card { width: 100%; border-radius: var(--radius); padding: 1.15rem 1.3rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: all 0.25s ease; margin-bottom: 0.6rem; position: relative; overflow: hidden; }
+    .special-card::after { content: '→'; position: absolute; right: 1.3rem; font-size: 0.9rem; transition: all 0.25s ease; }
+    .special-card:hover { transform: translateY(-2px); }
     .special-card:hover::after { right: 1rem; }
-    .cibc-card { background: linear-gradient(135deg, #fff5f6, #fff0f2); border: 1px solid rgba(196,30,58,0.15); }
-    .cibc-card::after { color: var(--red); }
-    .ws-card { background: linear-gradient(135deg, #edfaf3, #e6f9f0); border: 1px solid rgba(26,158,92,0.2); }
-    .ws-card::after { color: var(--green); }
-    .sp-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
-    .sp-icon-red { background: rgba(196,30,58,0.1); } .sp-icon-green { background: rgba(26,158,92,0.12); }
+    .cibc-card { background: linear-gradient(135deg, rgba(196,107,107,0.08), rgba(196,107,107,0.03)); border: 1px solid rgba(196,107,107,0.18); }
+    .cibc-card::after { color: rgba(196,107,107,0.5); }
+    .cibc-card:hover { border-color: rgba(196,107,107,0.3); background: linear-gradient(135deg, rgba(196,107,107,0.12), rgba(196,107,107,0.05)); }
+    .ws-card { background: linear-gradient(135deg, rgba(138,170,110,0.1), rgba(138,170,110,0.03)); border: 1px solid rgba(138,170,110,0.18); }
+    .ws-card::after { color: rgba(138,170,110,0.5); }
+    .ws-card:hover { border-color: rgba(138,170,110,0.3); background: linear-gradient(135deg, rgba(138,170,110,0.15), rgba(138,170,110,0.06)); }
+    .sp-icon { width: 44px; height: 44px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .sp-icon-red { background: var(--red-dim); }
+    .sp-icon-green { background: var(--green-dim); }
     .sp-text { flex: 1; }
-    .sp-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.2rem; }
-    .cibc-card .sp-sub { font-size: 0.73rem; font-weight: 300; color: #b05060; }
-    .ws-card .sp-sub { font-size: 0.73rem; font-weight: 300; color: #2d8c60; }
-    .ws-badge { background: var(--green); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 8px; white-space: nowrap; flex-shrink: 0; margin-right: 1.8rem; }
+    .sp-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .cibc-card .sp-sub { font-size: 0.72rem; font-weight: 300; color: rgba(196,107,107,0.7); }
+    .ws-card .sp-sub { font-size: 0.72rem; font-weight: 300; color: rgba(138,170,110,0.8); }
+    .ws-badge { background: var(--green); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 0.22rem 0.6rem; border-radius: 8px; white-space: nowrap; flex-shrink: 0; margin-right: 1.6rem; }
 
-    /* COFFEE */
-    .coffee-card { width: 100%; background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid rgba(217,119,6,0.25); border-radius: 16px; padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s; margin-bottom: 0.7rem; position: relative; overflow: hidden; box-shadow: var(--shadow); }
-    .coffee-card::after { content: '→'; position: absolute; right: 1.25rem; font-size: 1rem; color: var(--yellow); transition: right 0.2s; }
-    .coffee-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(217,119,6,0.15); border-color: rgba(217,119,6,0.4); }
+    /* ── COFFEE ── */
+    .coffee-card { width: 100%; background: linear-gradient(135deg, rgba(191,173,130,0.1), rgba(191,173,130,0.04)); border: 1px solid rgba(191,173,130,0.2); border-radius: var(--radius); padding: 1.1rem 1.3rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: all 0.25s ease; margin-bottom: 0.6rem; position: relative; overflow: hidden; }
+    .coffee-card::after { content: '→'; position: absolute; right: 1.3rem; font-size: 0.9rem; color: rgba(191,173,130,0.5); transition: all 0.25s ease; }
+    .coffee-card:hover { transform: translateY(-2px); border-color: rgba(191,173,130,0.35); }
     .coffee-card:hover::after { right: 1rem; }
-    .coffee-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(217,119,6,0.12); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .coffee-icon { width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(191,173,130,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
     .coffee-text { flex: 1; }
-    .coffee-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.2rem; }
-    .coffee-sub { font-size: 0.73rem; color: #92600a; font-weight: 300; }
+    .coffee-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .coffee-sub { font-size: 0.72rem; color: #a08e7e; font-weight: 300; }
 
-    /* CONTACT */
-    .contact-card { width: 100%; background: var(--surface); border: 1px dashed rgba(0,0,0,0.1); border-radius: 16px; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s; margin-bottom: 0.7rem; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
-    .contact-card:hover { transform: translateY(-2px); border-color: rgba(224,123,42,0.35); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-    .contact-icon { width: 40px; height: 40px; border-radius: 10px; background: #f4f6f9; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    /* ── CONTACT ── */
+    .contact-card { width: 100%; background: var(--bg-card); border: 1px dashed var(--border); border-radius: var(--radius); padding: 1rem 1.3rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: all 0.25s ease; margin-bottom: 0.6rem; }
+    .contact-card:hover { transform: translateY(-2px); border-color: var(--border-hover); background: var(--bg-card-hover); }
+    .contact-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(160,142,126,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
     .contact-text { flex: 1; }
     .contact-title { font-size: 0.88rem; font-weight: 500; }
-    .contact-sub { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+    .contact-sub { font-size: 0.72rem; color: var(--text-faint); font-weight: 300; }
 
-    /* ARTICLE CARDS */
-    .article-card { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 0.7rem; }
+    /* ══════════════════════════════ */
+    /*  ARTICLE CARDS                */
+    /* ══════════════════════════════ */
+    .article-card { width: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 0.6rem; }
     .article-hero { padding: 1.6rem 1.4rem 1.4rem; position: relative; overflow: hidden; }
-    .article-hero.green  { background: linear-gradient(135deg, #0a2e1c 0%, #1a9e5c 55%, #22c472 100%); }
-    .article-hero.green::before  { content: '📈'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.1; transform: rotate(15deg); pointer-events: none; }
-    .article-hero.orange { background: linear-gradient(135deg, #2e1a0a 0%, #e07b2a 55%, #f5a045 100%); }
-    .article-hero.orange::before { content: '🛡️'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.1; transform: rotate(15deg); pointer-events: none; }
-    .article-hero.blue   { background: linear-gradient(135deg, #0a1a2e 0%, #2563c4 55%, #4a90e8 100%); }
-    .article-hero.blue::before   { content: '🏦'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.1; transform: rotate(15deg); pointer-events: none; }
+    .article-hero.green  { background: linear-gradient(135deg, rgba(138,170,110,0.15) 0%, rgba(138,170,110,0.05) 100%); }
+    .article-hero.green::before  { content: '📈'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.08; transform: rotate(15deg); pointer-events: none; }
+    .article-hero.orange { background: linear-gradient(135deg, rgba(224,142,128,0.15) 0%, rgba(224,142,128,0.05) 100%); }
+    .article-hero.orange::before { content: '🛡️'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.08; transform: rotate(15deg); pointer-events: none; }
+    .article-hero.blue   { background: linear-gradient(135deg, rgba(126,168,196,0.15) 0%, rgba(126,168,196,0.05) 100%); }
+    .article-hero.blue::before   { content: '🏦'; position: absolute; right: -0.8rem; top: -0.8rem; font-size: 6rem; opacity: 0.08; transform: rotate(15deg); pointer-events: none; }
     .article-hero-tags { display: flex; gap: 0.4rem; margin-bottom: 0.85rem; flex-wrap: wrap; }
-    .hero-tag { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 6px; background: rgba(255,255,255,0.18); color: #fff; }
-    .article-hero-title { font-size: 1.08rem; font-weight: 700; color: #fff; line-height: 1.4; letter-spacing: -0.01em; }
-    .article-hero-meta { margin-top: 0.8rem; font-size: 0.67rem; color: rgba(255,255,255,0.6); display: flex; gap: 1rem; }
+    .hero-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 6px; background: rgba(58,48,42,0.06); color: var(--text-dim); }
+    .article-hero-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; color: var(--text); line-height: 1.4; }
+    .article-hero-meta { margin-top: 0.8rem; font-size: 0.65rem; color: var(--text-faint); display: flex; gap: 1rem; }
 
-    .article-toggle { width: 100%; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.4rem; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 600; border-top: 1px solid var(--border); transition: background 0.15s; }
+    .article-toggle { width: 100%; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.4rem; font-family: var(--font); font-size: 0.78rem; font-weight: 600; border-top: 1px solid var(--border); transition: background 0.15s; }
     .article-toggle.green  { color: var(--green); }
-    .article-toggle.green:hover  { background: var(--green-bg); }
+    .article-toggle.green:hover  { background: var(--green-dim); }
     .article-toggle.orange { color: var(--orange); }
-    .article-toggle.orange:hover { background: var(--orange-bg); }
+    .article-toggle.orange:hover { background: var(--orange-dim); }
     .article-toggle.blue   { color: var(--blue); }
-    .article-toggle.blue:hover   { background: var(--blue-bg); }
-    .toggle-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: transform 0.35s; flex-shrink: 0; }
-    .toggle-icon.green  { background: var(--green-bg);  color: var(--green); }
-    .toggle-icon.orange { background: var(--orange-bg); color: var(--orange); }
-    .toggle-icon.blue   { background: var(--blue-bg);   color: var(--blue); }
+    .article-toggle.blue:hover   { background: var(--blue-dim); }
+    .toggle-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; transition: transform 0.35s; flex-shrink: 0; }
+    .toggle-icon.green  { background: var(--green-dim); color: var(--green); }
+    .toggle-icon.orange { background: var(--orange-dim); color: var(--orange); }
+    .toggle-icon.blue   { background: var(--blue-dim); color: var(--blue); }
     .article-card.open .toggle-icon { transform: rotate(180deg); }
     .article-body { max-height: 0; overflow: hidden; transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1); }
     .article-card.open .article-body { max-height: 6000px; }
     .article-inner { padding: 1.4rem 1.4rem 1.6rem; }
 
-    .article-intro { font-size: 0.82rem; line-height: 1.8; color: #4b5563; font-weight: 300; margin-bottom: 1.4rem; padding-left: 0.9rem; }
-    .article-intro.green  { border-left: 3px solid var(--green); }
-    .article-intro.orange { border-left: 3px solid var(--orange); }
-    .article-intro.blue   { border-left: 3px solid var(--blue); }
+    .article-intro { font-size: 0.82rem; line-height: 1.85; color: var(--text-dim); font-weight: 300; margin-bottom: 1.4rem; padding-left: 0.9rem; }
+    .article-intro.green  { border-left: 2px solid var(--green); }
+    .article-intro.orange { border-left: 2px solid var(--orange); }
+    .article-intro.blue   { border-left: 2px solid var(--blue); }
 
     .account-grid { display: flex; gap: 0.6rem; margin-bottom: 1.4rem; }
-    .account-box { flex: 1; border-radius: 12px; padding: 1rem 0.9rem; display: flex; flex-direction: column; gap: 0.4rem; transition: transform 0.15s, box-shadow 0.15s; }
-    .account-box.celi { background: var(--green-bg); border: 1px solid rgba(26,158,92,0.22); }
-    .account-box.reer { background: var(--blue-bg); border: 1px solid rgba(37,99,196,0.22); }
-    .account-box:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-    .account-box-icon { font-size: 1.3rem; }
+    .account-box { flex: 1; border-radius: var(--radius-sm); padding: 1rem 0.9rem; display: flex; flex-direction: column; gap: 0.35rem; transition: transform 0.15s; }
+    .account-box.celi { background: var(--green-dim); border: 1px solid rgba(138,170,110,0.2); }
+    .account-box.reer { background: var(--blue-dim); border: 1px solid rgba(126,168,196,0.2); }
+    .account-box:hover { transform: translateY(-2px); }
+    .account-box-icon { font-size: 1.2rem; }
     .account-box-name { font-size: 0.95rem; font-weight: 700; }
     .account-box.celi .account-box-name { color: var(--green); }
     .account-box.reer .account-box-name { color: var(--blue); }
-    .account-box-full { font-size: 0.67rem; color: var(--muted); font-weight: 300; margin-top: -0.2rem; margin-bottom: 0.3rem; }
-    .account-box-desc { font-size: 0.72rem; line-height: 1.65; font-weight: 300; color: #374151; }
-    .account-pill { display: inline-block; margin-top: 0.4rem; font-size: 0.62rem; font-weight: 700; padding: 0.18rem 0.55rem; border-radius: 6px; letter-spacing: 0.04em; }
-    .celi .account-pill { background: rgba(26,158,92,0.15); color: var(--green); }
-    .reer .account-pill { background: rgba(37,99,196,0.15); color: var(--blue); }
+    .account-box-full { font-size: 0.65rem; color: var(--text-faint); font-weight: 300; }
+    .account-box-desc { font-size: 0.72rem; line-height: 1.65; font-weight: 300; color: var(--text-dim); }
+    .account-box-desc strong { color: var(--text); font-weight: 500; }
+    .account-pill { display: inline-block; margin-top: 0.4rem; font-size: 0.6rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 6px; }
+    .celi .account-pill { background: rgba(138,170,110,0.15); color: var(--green); }
+    .reer .account-pill { background: rgba(126,168,196,0.15); color: var(--blue); }
 
-    .article-divider { border: none; border-top: 1px dashed rgba(0,0,0,0.1); margin: 1.3rem 0; }
-    .steps-heading { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 1.3rem 0; }
+    .steps-heading { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1rem; }
     .step-list { display: flex; flex-direction: column; }
     .step { display: flex; align-items: stretch; }
     .step-left { display: flex; flex-direction: column; align-items: center; width: 36px; flex-shrink: 0; padding-top: 2px; }
-    .step-num { width: 30px; height: 30px; border-radius: 50%; color: #fff; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .step-num.green  { background: var(--green);  box-shadow: 0 0 0 3px var(--green-bg); }
-    .step-num.orange { background: var(--orange); box-shadow: 0 0 0 3px var(--orange-bg); }
-    .step-num.blue   { background: var(--blue);   box-shadow: 0 0 0 3px var(--blue-bg); }
-    .step-line { width: 2px; flex: 1; min-height: 16px; margin: 4px 0; }
-    .step-line.green  { background: linear-gradient(to bottom, rgba(26,158,92,0.3),  rgba(26,158,92,0.08)); }
-    .step-line.orange { background: linear-gradient(to bottom, rgba(224,123,42,0.3), rgba(224,123,42,0.08)); }
-    .step-line.blue   { background: linear-gradient(to bottom, rgba(37,99,196,0.3),  rgba(37,99,196,0.08)); }
+    .step-num { width: 28px; height: 28px; border-radius: 50%; color: #fff; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-num.green  { background: var(--green); }
+    .step-num.orange { background: var(--orange); }
+    .step-num.blue   { background: var(--blue); }
+    .step-line { width: 1px; flex: 1; min-height: 16px; margin: 4px 0; }
+    .step-line.green  { background: linear-gradient(to bottom, rgba(138,170,110,0.35), transparent); }
+    .step-line.orange { background: linear-gradient(to bottom, rgba(224,142,128,0.35), transparent); }
+    .step-line.blue   { background: linear-gradient(to bottom, rgba(126,168,196,0.35), transparent); }
     .step:last-child .step-line { display: none; }
     .step-content { flex: 1; padding: 0 0 1.5rem 0.9rem; }
-    .step-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.45rem; line-height: 1.3; }
-    .step-desc { font-size: 0.77rem; line-height: 1.75; color: #6b7280; font-weight: 300; }
-    .step-desc strong { font-weight: 600; color: #374151; }
-    .step-bullets { margin: 0.6rem 0 0 0; display: flex; flex-direction: column; gap: 0.35rem; }
-    .step-bullet { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.75rem; line-height: 1.65; color: #6b7280; font-weight: 300; }
-    .bullet-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
-    .bullet-dot.green  { background: var(--green); }
-    .bullet-dot.orange { background: var(--orange); }
-    .bullet-dot.blue   { background: var(--blue); }
-    .step-badge { display: inline-block; font-size: 0.67rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 6px; margin: 0 0.15rem; vertical-align: middle; }
-    .step-badge.green  { background: var(--green-bg);  color: var(--green); }
-    .step-badge.blue   { background: var(--blue-bg);   color: var(--blue); }
-    .step-badge.orange { background: var(--orange-bg); color: var(--orange); }
-    .step-screen { margin-top: 0.75rem; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.72rem; font-weight: 400; display: flex; align-items: center; gap: 0.6rem; }
-    .step-screen.green  { background: linear-gradient(135deg, #f0fdf6, #e6f9ef); border: 1px solid rgba(26,158,92,0.2);  color: #2d6e4a; }
-    .step-screen.orange { background: linear-gradient(135deg, #fff8f0, #fff0e0); border: 1px solid rgba(224,123,42,0.2); color: #7a4010; }
-    .step-screen.blue   { background: linear-gradient(135deg, #f0f5ff, #e6eeff); border: 1px solid rgba(37,99,196,0.2);  color: #1a3a80; }
+    .step-title { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; line-height: 1.3; }
+    .step-desc { font-size: 0.77rem; line-height: 1.75; color: var(--text-dim); font-weight: 300; }
+    .step-desc strong { font-weight: 600; color: var(--text); }
+    .step-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 6px; margin: 0 0.1rem; vertical-align: middle; }
+    .step-badge.green  { background: var(--green-dim); color: var(--green); }
+    .step-badge.blue   { background: var(--blue-dim); color: var(--blue); }
+    .step-screen { margin-top: 0.7rem; border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 0.72rem; font-weight: 400; display: flex; align-items: center; gap: 0.6rem; }
+    .step-screen.green  { background: var(--green-dim); border: 1px solid rgba(138,170,110,0.18); color: #5a7a42; }
+    .step-screen.blue   { background: var(--blue-dim); border: 1px solid rgba(126,168,196,0.18); color: #4a7a9a; }
+    .step-screen strong { color: var(--text); font-weight: 600; }
     .step-screen-icon { font-size: 1rem; flex-shrink: 0; }
-    .tip-box, .warn-box { border-radius: 12px; padding: 0.9rem 1rem; display: flex; gap: 0.7rem; align-items: flex-start; margin: 0.5rem 0 1.2rem; }
-    .tip-box { background: var(--yellow-bg); border: 1px solid rgba(217,119,6,0.2); }
-    .warn-box { background: var(--blue-bg); border: 1px solid rgba(37,99,196,0.2); }
+
+    .tip-box, .warn-box { border-radius: var(--radius-sm); padding: 0.85rem 1rem; display: flex; gap: 0.7rem; align-items: flex-start; margin: 0.5rem 0 1.2rem; }
+    .tip-box { background: var(--orange-dim); border: 1px solid rgba(224,142,128,0.15); }
+    .warn-box { background: var(--blue-dim); border: 1px solid rgba(126,168,196,0.15); }
     .tip-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-    .tip-text { font-size: 0.75rem; line-height: 1.7; color: #78350f; font-weight: 300; }
-    .warn-text { font-size: 0.75rem; line-height: 1.7; color: #1e3a8a; font-weight: 300; }
-    .tip-text strong, .warn-text strong { font-weight: 600; }
+    .tip-text { font-size: 0.75rem; line-height: 1.7; color: #8a5a4a; font-weight: 300; }
+    .tip-text strong { color: var(--orange); font-weight: 600; }
+    .warn-text { font-size: 0.75rem; line-height: 1.7; color: #4a7090; font-weight: 300; }
+    .warn-text strong { color: var(--blue); font-weight: 600; }
+
     .summary-box { border-radius: 14px; padding: 1.1rem; margin: 1.2rem 0; }
-    .summary-box.green  { background: linear-gradient(135deg, #f0fdf6, #e8faf2); border: 1px solid rgba(26,158,92,0.25); }
-    .summary-box.orange { background: linear-gradient(135deg, #fff8f0, #fff0e0); border: 1px solid rgba(224,123,42,0.25); }
-    .summary-box.blue   { background: linear-gradient(135deg, #f0f5ff, #e6eeff); border: 1px solid rgba(37,99,196,0.25); }
-    .summary-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .summary-box.green  { background: var(--green-dim); border: 1px solid rgba(138,170,110,0.15); }
+    .summary-box.blue   { background: var(--blue-dim); border: 1px solid rgba(126,168,196,0.15); }
+    .summary-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
     .summary-title.green  { color: var(--green); }
-    .summary-title.orange { color: var(--orange); }
     .summary-title.blue   { color: var(--blue); }
-    .check-item { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.77rem; line-height: 1.6; color: #374151; font-weight: 300; margin-bottom: 0.45rem; }
+    .check-item { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.77rem; line-height: 1.6; color: var(--text-dim); font-weight: 300; margin-bottom: 0.4rem; }
     .check-item:last-child { margin-bottom: 0; }
     .check-icon { font-size: 0.85rem; flex-shrink: 0; margin-top: 1px; }
     .check-icon.green  { color: var(--green); }
-    .check-icon.orange { color: var(--orange); }
     .check-icon.blue   { color: var(--blue); }
-    .article-cta { display: block; width: 100%; color: #fff; text-decoration: none; border-radius: 14px; padding: 1rem 1.2rem; text-align: center; font-size: 0.88rem; font-weight: 700; transition: box-shadow 0.2s, transform 0.15s; margin-top: 1.3rem; }
+
+    .article-cta { display: block; width: 100%; color: #fff; text-decoration: none; border-radius: 14px; padding: 1rem 1.2rem; text-align: center; font-size: 0.88rem; font-weight: 700; transition: all 0.25s ease; margin-top: 1.3rem; }
     .article-cta:hover { transform: translateY(-2px); }
-    .article-cta.green  { background: linear-gradient(135deg, #1a9e5c, #15834d); box-shadow: 0 4px 20px rgba(26,158,92,0.3); }
-    .article-cta.green:hover  { box-shadow: 0 8px 28px rgba(26,158,92,0.4); }
-    .article-cta.orange { background: linear-gradient(135deg, #e07b2a, #c4631a); box-shadow: 0 4px 20px rgba(224,123,42,0.3); }
-    .article-cta.orange:hover { box-shadow: 0 8px 28px rgba(224,123,42,0.4); }
-    .article-cta.blue   { background: linear-gradient(135deg, #2563c4, #1a4fa8); box-shadow: 0 4px 20px rgba(37,99,196,0.3); }
-    .article-cta.blue:hover   { box-shadow: 0 8px 28px rgba(37,99,196,0.4); }
-    .article-cta-sub { font-size: 0.68rem; font-weight: 300; opacity: 0.8; margin-top: 0.25rem; display: block; }
+    .article-cta.green  { background: var(--green); box-shadow: 0 4px 24px rgba(138,170,110,0.3); }
+    .article-cta.green:hover  { box-shadow: 0 8px 32px rgba(138,170,110,0.4); }
+    .article-cta.orange { background: var(--orange); box-shadow: 0 4px 24px rgba(224,142,128,0.3); }
+    .article-cta.orange:hover { box-shadow: 0 8px 32px rgba(224,142,128,0.4); }
+    .article-cta.blue   { background: var(--blue); box-shadow: 0 4px 24px rgba(126,168,196,0.3); }
+    .article-cta.blue:hover   { box-shadow: 0 8px 32px rgba(126,168,196,0.4); }
+    .article-cta-sub { font-size: 0.66rem; font-weight: 400; opacity: 0.7; margin-top: 0.2rem; display: block; }
 
-    .blog-grid { width: 100%; display: flex; flex-direction: column; gap: 0.7rem; }
+    .blog-grid { width: 100%; display: flex; flex-direction: column; gap: 0.6rem; }
 
-    /* ── VIEWERS COUNTER ── */
-    .viewers-section {
-      width: 100%;
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-      animation: rise 0.45s 0.52s ease both;
-    }
-    .viewers-card {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.2rem 1.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.2rem;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .viewers-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(26,158,92,0.03), rgba(37,99,196,0.03), rgba(224,123,42,0.03));
-      pointer-events: none;
-    }
-    .viewers-live-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--green);
-      flex-shrink: 0;
-      position: relative;
-    }
-    .viewers-live-dot::after {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      background: rgba(26,158,92,0.3);
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { transform: scale(1); opacity: 0.4; }
-      50% { transform: scale(1.6); opacity: 0; }
-    }
-    .viewers-info {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.15rem;
-    }
-    .viewers-count-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
-    }
-    .viewers-number {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-    .viewers-label {
-      font-size: 0.72rem;
-      color: var(--muted);
-      font-weight: 400;
-      letter-spacing: 0.02em;
-    }
-    .viewers-sub {
-      font-size: 0.62rem;
-      color: var(--muted);
-      font-weight: 300;
-      letter-spacing: 0.04em;
-    }
-    .viewers-total-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.6rem;
-      width: 100%;
-      margin-top: 0.15rem;
-    }
-    .viewers-stat {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.1rem;
-    }
-    .viewers-stat-num {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
-    }
-    .viewers-stat-label {
-      font-size: 0.58rem;
-      color: var(--muted);
-      font-weight: 300;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    .viewers-divider {
-      width: 1px;
-      height: 28px;
-      background: var(--border);
-    }
+    /* ── VIEWERS ── */
+    .viewers-section { width: 100%; margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+    .viewers-card { width: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.4rem; display: flex; align-items: center; justify-content: center; gap: 1.2rem; }
+    .viewers-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; position: relative; }
+    .viewers-live-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; background: rgba(138,170,110,0.35); animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%, 100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.8); opacity: 0; } }
+    .viewers-info { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
+    .viewers-count-row { display: flex; align-items: baseline; gap: 0.4rem; }
+    .viewers-number { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--text); font-variant-numeric: tabular-nums; }
+    .viewers-label { font-size: 0.72rem; color: var(--text-dim); font-weight: 400; }
+    .viewers-sub { font-size: 0.58rem; color: var(--text-faint); font-weight: 300; }
+    .viewers-total-row { display: flex; align-items: center; justify-content: center; gap: 1.6rem; width: 100%; }
+    .viewers-stat { display: flex; flex-direction: column; align-items: center; gap: 0.08rem; }
+    .viewers-stat-num { font-family: var(--serif); font-size: 1.05rem; color: var(--text); font-variant-numeric: tabular-nums; }
+    .viewers-stat-label { font-size: 0.55rem; color: var(--text-faint); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; }
+    .viewers-divider { width: 1px; height: 24px; background: var(--border); }
 
-    .foot { margin-top: 2.5rem; font-size: 0.67rem; color: #c0c8d4; text-align: center; letter-spacing: 0.06em; }
+    .foot { margin-top: 2.5rem; font-size: 0.64rem; color: var(--text-faint); text-align: center; letter-spacing: 0.06em; }
 
-    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-    .profile      { animation: rise 0.45s 0.00s ease both; }
-    .link-card    { animation: rise 0.45s 0.10s ease both; }
-    .cibc-card    { animation: rise 0.45s 0.22s ease both; }
-    .ws-card      { animation: rise 0.45s 0.28s ease both; }
-    .article-card { animation: rise 0.45s 0.34s ease both; }
-    .coffee-card  { animation: rise 0.45s 0.40s ease both; }
-    .contact-card { animation: rise 0.45s 0.46s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .profile        { animation: rise 0.5s 0.0s ease both; }
+    .stats-row      { animation: rise 0.5s 0.08s ease both; }
+    .link-card      { animation: rise 0.5s 0.14s ease both; }
+    .cibc-card      { animation: rise 0.5s 0.20s ease both; }
+    .ws-card        { animation: rise 0.5s 0.26s ease both; }
+    .article-card   { animation: rise 0.5s 0.32s ease both; }
+    .coffee-card    { animation: rise 0.5s 0.38s ease both; }
+    .contact-card   { animation: rise 0.5s 0.44s ease both; }
+    .viewers-section{ animation: rise 0.5s 0.50s ease both; }
   </style>
 </head>
 <body>
-
-<!-- ANIMATED BACKGROUND CANVAS -->
-<canvas id="bg-canvas"></canvas>
 
 <div class="page">
 
   <div class="profile">
     <div class="name">Hamza Tahraoui</div>
-    <div class="bio">Conseiller en assurances auto &amp; habitation au Québec.<br>Je vous aide à économiser et à investir intelligemment.</div>
+    <div class="bio">Conseiller en <strong>assurances auto &amp; habitation</strong> au Québec.<br>Je vous aide à économiser et à <strong>investir intelligemment</strong>.</div>
     <div class="location-tag">📍 Québec, Canada</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num">Auto</div><div class="stat-label">Assurance</div></div>
+    <div class="stat-item"><div class="stat-num">Habitation</div><div class="stat-label">Assurance</div></div>
+    <div class="stat-item"><div class="stat-num">CELI</div><div class="stat-label">Investissement</div></div>
   </div>
 
   <div class="section-label">🛡️ Assurances</div>
   <a href="tel:4387711845" class="link-card">
     <div class="card-icon icon-auto">🚗</div>
-    <div class="card-text">
-      <div class="card-title">Assurance Auto</div>
-      <div class="card-sub">Soumission gratuite · 438-771-1845</div>
-    </div>
+    <div class="card-text"><div class="card-title">Assurance Auto</div><div class="card-sub">Soumission gratuite · 438-771-1845</div></div>
   </a>
   <a href="tel:4387711845" class="link-card">
     <div class="card-icon icon-home">🏠</div>
-    <div class="card-text">
-      <div class="card-title">Assurance Habitation</div>
-      <div class="card-sub">Propriétaire ou locataire · 438-771-1845</div>
-    </div>
+    <div class="card-text"><div class="card-title">Assurance Habitation</div><div class="card-sub">Propriétaire ou locataire · 438-771-1845</div></div>
   </a>
 
   <div class="section-label">🏦 Banque</div>
   <a href="https://www.cibconline.cibc.com/ebm-resources/public/cibc-referral-app/client/index.html#/welcome?locale=fr&xref=11117111618704420990&utrc=E2358:1" target="_blank" rel="noopener" class="special-card cibc-card">
     <div class="sp-icon sp-icon-red">🏦</div>
-    <div class="sp-text">
-      <div class="sp-title">CIBC · Compte Nouveaux Arrivants</div>
-      <div class="sp-sub">Ouvrez un compte bancaire au Canada · Gratuit</div>
-    </div>
+    <div class="sp-text"><div class="sp-title">CIBC · Compte Nouveaux Arrivants</div><div class="sp-sub">Ouvrez un compte bancaire au Canada · Gratuit</div></div>
   </a>
 
   <div class="section-label">💸 Investissement</div>
   <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="special-card ws-card">
     <div class="sp-icon sp-icon-green">📈</div>
-    <div class="sp-text">
-      <div class="sp-title">Wealthsimple · Ouvrir un compte</div>
-      <div class="sp-sub">CELI, REER · Zéro commission · Bonus à l'inscription</div>
-    </div>
+    <div class="sp-text"><div class="sp-title">Wealthsimple · Ouvrir un compte</div><div class="sp-sub">CELI, REER · Zéro commission · Bonus à l'inscription</div></div>
     <div class="ws-badge">+25$</div>
   </a>
 
   <div class="section-label">✍️ Guide · Investissement</div>
   <div class="article-card" id="article">
     <div class="article-hero green">
-      <div class="article-hero-tags">
-        <span class="hero-tag">Débutant</span>
-        <span class="hero-tag">CELI</span>
-        <span class="hero-tag">REER</span>
-        <span class="hero-tag">Wealthsimple</span>
-      </div>
-      <div class="article-hero-title">Comment ouvrir votre premier compte Wealthsimple — Guide complet étape par étape</div>
-      <div class="article-hero-meta">
-        <span>✍️ Hamza Tahraoui</span>
-        <span>⏱ 7 min de lecture</span>
-      </div>
+      <div class="article-hero-tags"><span class="hero-tag">Débutant</span><span class="hero-tag">CELI</span><span class="hero-tag">REER</span><span class="hero-tag">Wealthsimple</span></div>
+      <div class="article-hero-title">Comment ouvrir votre premier compte Wealthsimple — Guide complet</div>
+      <div class="article-hero-meta"><span>✍️ Hamza Tahraoui</span><span>⏱ 7 min de lecture</span></div>
     </div>
-    <button class="article-toggle green" id="toggle-btn">
-      <span id="toggle-label">Lire le guide complet</span>
-      <span class="toggle-icon green">▼</span>
-    </button>
-    <div class="article-body">
-      <div class="article-inner">
-        <p class="article-intro green">
-          Wealthsimple est la plateforme d'investissement la plus populaire au Canada. Zéro commission, interface simple, et des comptes enregistrés comme le CELI et le REER accessibles en quelques clics. Voici comment ouvrir votre compte de A à Z, sans jargon.
-        </p>
-        <div class="account-grid">
-          <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="account-box celi" style="text-decoration:none;">
-            <div class="account-box-icon">🟢</div>
-            <div class="account-box-name">CELI</div>
-            <div class="account-box-full">Compte d'épargne libre d'impôt</div>
-            <div class="account-box-desc">Vos gains et retraits sont <strong>100 % libres d'impôt</strong>. Idéal pour tout le monde, à tout âge.</div>
-            <span class="account-pill">Ouvrir mon CELI →</span>
-          </a>
-          <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="account-box reer" style="text-decoration:none;">
-            <div class="account-box-icon">🔵</div>
-            <div class="account-box-name">REER</div>
-            <div class="account-box-full">Régime enregistré d'épargne-retraite</div>
-            <div class="account-box-desc">Vos cotisations <strong>réduisent votre revenu imposable</strong>. Excellent pour la retraite.</div>
-            <span class="account-pill">Ouvrir mon REER →</span>
-          </a>
-        </div>
-        <div class="warn-box">
-          <span class="tip-icon">ℹ️</span>
-          <span class="warn-text"><strong>Vous pouvez ouvrir les deux comptes en même temps.</strong> Il n'y a aucune contrainte à avoir un CELI et un REER chez Wealthsimple simultanément.</span>
-        </div>
-        <hr class="article-divider" />
-        <div class="steps-heading">📋 Les étapes détaillées</div>
-        <div class="step-list">
-          <div class="step">
-            <div class="step-left"><div class="step-num green">1</div><div class="step-line green"></div></div>
-            <div class="step-content">
-              <div class="step-title">Cliquez sur le lien de parrainage</div>
-              <div class="step-desc">Commencez toujours par le lien de parrainage pour obtenir votre bonus. <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" style="color:var(--green);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Cliquez ici pour obtenir 25 $ de bonus</a> — le lien est automatiquement appliqué à votre inscription.</div>
-              <div class="step-screen green"><span class="step-screen-icon">🎁</span>En utilisant ce lien, vous et moi recevons chacun <strong>25 $</strong> une fois votre premier dépôt effectué.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-left"><div class="step-num green">2</div><div class="step-line green"></div></div>
-            <div class="step-content">
-              <div class="step-title">Créez votre compte — Inscription</div>
-              <div class="step-desc">Sur la page d'accueil, cliquez sur <strong>« S'inscrire »</strong> et choisissez votre méthode (courriel, Apple ou Google). Confirmez votre adresse via le lien reçu par courriel.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-left"><div class="step-num green">3</div><div class="step-line green"></div></div>
-            <div class="step-content">
-              <div class="step-title">Renseignez vos informations personnelles</div>
-              <div class="step-desc">Nom, adresse, téléphone et <strong>numéro d'assurance sociale (NAS)</strong> requis pour les comptes enregistrés CELI et REER.</div>
-              <div class="tip-box" style="margin-top:0.75rem;margin-bottom:0;">
-                <span class="tip-icon">🔒</span>
-                <span class="tip-text"><strong>Vos données sont sécurisées.</strong> Wealthsimple utilise un chiffrement bancaire de niveau militaire.</span>
-              </div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-left"><div class="step-num green">4</div><div class="step-line green"></div></div>
-            <div class="step-content">
-              <div class="step-title">Vérifiez votre identité (2 minutes)</div>
-              <div class="step-desc">Photo de votre permis de conduire, passeport ou carte d'identité provinciale — vérification automatique en moins de 2 minutes.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-left"><div class="step-num green">5</div><div class="step-line green"></div></div>
-            <div class="step-content">
-              <div class="step-title">Choisissez votre type de compte</div>
-              <div class="step-desc">Sélectionnez <span class="step-badge green">CELI</span> ou <span class="step-badge blue">REER</span> (ou les deux).</div>
-              <div class="step-screen green" style="margin-top:0.75rem;"><span class="step-screen-icon">💡</span>Droits CELI 2024 : <strong>7 000 $ / an</strong>. Droits REER : <strong>18 % de votre revenu</strong> de l'année précédente.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-left"><div class="step-num green">6</div><div class="step-line green"></div></div>
-            <div class="step-content">
-              <div class="step-title">Connectez votre banque et déposez</div>
-              <div class="step-desc">Reliez votre compte bancaire canadien — <strong>aucun minimum requis</strong>. Activez les dépôts automatiques mensuels.</div>
-              <div class="tip-box" style="margin-top:0.75rem;margin-bottom:0;">
-                <span class="tip-icon">💡</span>
-                <span class="tip-text"><strong>Conseil de Hamza :</strong> Commencez avec 50 $/mois. La régularité bat le montant. Les intérêts composés font le reste.</span>
-              </div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-left"><div class="step-num green">7</div></div>
-            <div class="step-content">
-              <div class="step-title">Vous êtes prêt à investir ! 🎉</div>
-              <div class="step-desc">Votre compte est ouvert et votre argent commence à travailler pour vous.</div>
-            </div>
-          </div>
-        </div>
-        <hr class="article-divider" />
-        <div class="summary-box green">
-          <div class="summary-title green">✅ Récapitulatif — Ce dont vous avez besoin</div>
-          <div class="check-item"><span class="check-icon green">✓</span><span>Une adresse courriel valide</span></div>
-          <div class="check-item"><span class="check-icon green">✓</span><span>Une pièce d'identité (permis ou passeport)</span></div>
-          <div class="check-item"><span class="check-icon green">✓</span><span>Votre numéro d'assurance sociale (NAS)</span></div>
-          <div class="check-item"><span class="check-icon green">✓</span><span>Les coordonnées de votre compte bancaire canadien</span></div>
-          <div class="check-item"><span class="check-icon green">✓</span><span>10 minutes de votre temps</span></div>
-        </div>
-        <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="article-cta green">
-          Ouvrir mon compte Wealthsimple maintenant
-          <span class="article-cta-sub">Bonus de 25 $ avec ce lien · Zéro commission · 100 % gratuit</span>
+    <button class="article-toggle green" id="toggle-btn"><span id="toggle-label">Lire le guide complet</span><span class="toggle-icon green">▼</span></button>
+    <div class="article-body"><div class="article-inner">
+      <p class="article-intro green">Wealthsimple est la plateforme d'investissement la plus populaire au Canada. Zéro commission, interface simple, et des comptes enregistrés comme le CELI et le REER accessibles en quelques clics.</p>
+      <div class="account-grid">
+        <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="account-box celi" style="text-decoration:none;">
+          <div class="account-box-icon">🟢</div><div class="account-box-name">CELI</div><div class="account-box-full">Compte d'épargne libre d'impôt</div>
+          <div class="account-box-desc">Vos gains et retraits sont <strong>100 % libres d'impôt</strong>.</div><span class="account-pill">Ouvrir mon CELI →</span>
+        </a>
+        <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="account-box reer" style="text-decoration:none;">
+          <div class="account-box-icon">🔵</div><div class="account-box-name">REER</div><div class="account-box-full">Régime enregistré d'épargne-retraite</div>
+          <div class="account-box-desc">Vos cotisations <strong>réduisent votre revenu imposable</strong>.</div><span class="account-pill">Ouvrir mon REER →</span>
         </a>
       </div>
-    </div>
+      <div class="warn-box"><span class="tip-icon">ℹ️</span><span class="warn-text"><strong>Vous pouvez ouvrir les deux comptes en même temps.</strong> Aucune contrainte à avoir un CELI et un REER simultanément.</span></div>
+      <hr class="article-divider" />
+      <div class="steps-heading">📋 Les étapes détaillées</div>
+      <div class="step-list">
+        <div class="step"><div class="step-left"><div class="step-num green">1</div><div class="step-line green"></div></div><div class="step-content"><div class="step-title">Cliquez sur le lien de parrainage</div><div class="step-desc"><a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" style="color:var(--green);font-weight:600;text-decoration:underline;text-underline-offset:2px;">Cliquez ici pour obtenir 25 $ de bonus</a></div><div class="step-screen green"><span class="step-screen-icon">🎁</span>Vous et moi recevons chacun <strong>25 $</strong> une fois votre premier dépôt effectué.</div></div></div>
+        <div class="step"><div class="step-left"><div class="step-num green">2</div><div class="step-line green"></div></div><div class="step-content"><div class="step-title">Créez votre compte — Inscription</div><div class="step-desc">Cliquez sur <strong>« S'inscrire »</strong> et choisissez votre méthode (courriel, Apple ou Google).</div></div></div>
+        <div class="step"><div class="step-left"><div class="step-num green">3</div><div class="step-line green"></div></div><div class="step-content"><div class="step-title">Renseignez vos informations personnelles</div><div class="step-desc">Nom, adresse, téléphone et <strong>NAS</strong> requis pour les comptes enregistrés.</div><div class="tip-box" style="margin-top:0.7rem;margin-bottom:0;"><span class="tip-icon">🔒</span><span class="tip-text"><strong>Vos données sont sécurisées.</strong> Chiffrement bancaire de niveau militaire.</span></div></div></div>
+        <div class="step"><div class="step-left"><div class="step-num green">4</div><div class="step-line green"></div></div><div class="step-content"><div class="step-title">Vérifiez votre identité (2 minutes)</div><div class="step-desc">Photo de votre permis de conduire, passeport ou carte d'identité provinciale.</div></div></div>
+        <div class="step"><div class="step-left"><div class="step-num green">5</div><div class="step-line green"></div></div><div class="step-content"><div class="step-title">Choisissez votre type de compte</div><div class="step-desc">Sélectionnez <span class="step-badge green">CELI</span> ou <span class="step-badge blue">REER</span> (ou les deux).</div><div class="step-screen green" style="margin-top:0.7rem;"><span class="step-screen-icon">💡</span>Droits CELI 2024 : <strong>7 000 $ / an</strong>. Droits REER : <strong>18 % de votre revenu</strong>.</div></div></div>
+        <div class="step"><div class="step-left"><div class="step-num green">6</div><div class="step-line green"></div></div><div class="step-content"><div class="step-title">Connectez votre banque et déposez</div><div class="step-desc">Reliez votre compte bancaire — <strong>aucun minimum requis</strong>.</div><div class="tip-box" style="margin-top:0.7rem;margin-bottom:0;"><span class="tip-icon">💡</span><span class="tip-text"><strong>Conseil de Hamza :</strong> Commencez avec 50 $/mois. La régularité bat le montant.</span></div></div></div>
+        <div class="step"><div class="step-left"><div class="step-num green">7</div></div><div class="step-content"><div class="step-title">Vous êtes prêt à investir ! 🎉</div><div class="step-desc">Votre compte est ouvert et votre argent commence à travailler pour vous.</div></div></div>
+      </div>
+      <hr class="article-divider" />
+      <div class="summary-box green"><div class="summary-title green">✅ Récapitulatif</div>
+        <div class="check-item"><span class="check-icon green">✓</span><span>Une adresse courriel valide</span></div>
+        <div class="check-item"><span class="check-icon green">✓</span><span>Une pièce d'identité (permis ou passeport)</span></div>
+        <div class="check-item"><span class="check-icon green">✓</span><span>Votre numéro d'assurance sociale (NAS)</span></div>
+        <div class="check-item"><span class="check-icon green">✓</span><span>Coordonnées de votre compte bancaire canadien</span></div>
+        <div class="check-item"><span class="check-icon green">✓</span><span>10 minutes de votre temps</span></div>
+      </div>
+      <a href="https://wealthsimple.com/invite/XWKFLS" target="_blank" rel="noopener" class="article-cta green">Ouvrir mon compte Wealthsimple maintenant<span class="article-cta-sub">Bonus de 25 $ · Zéro commission · 100 % gratuit</span></a>
+    </div></div>
   </div>
 
   <div class="section-label">📝 Blog · Articles</div>
   <div class="blog-grid">
-
     <div class="article-card" id="blog-1">
-      <div class="article-hero orange">
-        <div class="article-hero-tags">
-          <span class="hero-tag">Assurance</span>
-          <span class="hero-tag">Économies</span>
-          <span class="hero-tag">Auto</span>
+      <div class="article-hero orange"><div class="article-hero-tags"><span class="hero-tag">Assurance</span><span class="hero-tag">Économies</span><span class="hero-tag">Auto</span></div><div class="article-hero-title">5 erreurs qui font exploser votre prime d'assurance auto au Québec</div><div class="article-hero-meta"><span>✍️ Hamza Tahraoui</span><span>⏱ 5 min</span></div></div>
+      <button class="article-toggle orange" onclick="toggleArticle('blog-1', this)"><span>Lire l'article</span><span class="toggle-icon orange">▼</span></button>
+      <div class="article-body"><div class="article-inner">
+        <p class="article-intro orange">Beaucoup de conducteurs paient trop cher leur assurance auto sans le savoir. Voici les 5 erreurs les plus fréquentes.</p>
+        <div class="step-list">
+          <div class="step"><div class="step-left"><div class="step-num orange">1</div><div class="step-line orange"></div></div><div class="step-content"><div class="step-title">Ne pas magasiner sa prime chaque année</div><div class="step-desc">Comparer annuellement peut vous faire économiser <strong>200 $ à 600 $</strong>.</div></div></div>
+          <div class="step"><div class="step-left"><div class="step-num orange">2</div><div class="step-line orange"></div></div><div class="step-content"><div class="step-title">Choisir une franchise trop basse</div><div class="step-desc">Une franchise de 1 000 $ coûte beaucoup moins cher en prime. Mettez la différence de côté.</div></div></div>
+          <div class="step"><div class="step-left"><div class="step-num orange">3</div><div class="step-line orange"></div></div><div class="step-content"><div class="step-title">Oublier les rabais disponibles</div><div class="step-desc">Multi-véhicules, regroupement auto + habitation, télématique… Demandez tous les rabais.</div></div></div>
+          <div class="step"><div class="step-left"><div class="step-num orange">4</div><div class="step-line orange"></div></div><div class="step-content"><div class="step-title">Déclarer un usage professionnel inutilement</div><div class="step-desc">Si l'usage « plaisir » suffit, il coûte moins cher.</div></div></div>
+          <div class="step"><div class="step-left"><div class="step-num orange">5</div></div><div class="step-content"><div class="step-title">Ne pas signaler les changements de situation</div><div class="step-desc">Déménagement, télétravail — ces changements peuvent <strong>réduire significativement votre prime</strong>.</div></div></div>
         </div>
-        <div class="article-hero-title">5 erreurs qui font exploser votre prime d'assurance auto au Québec</div>
-        <div class="article-hero-meta">
-          <span>✍️ Hamza Tahraoui</span>
-          <span>⏱ 5 min de lecture</span>
-        </div>
-      </div>
-      <button class="article-toggle orange" onclick="toggleArticle('blog-1', this)">
-        <span>Lire l'article</span>
-        <span class="toggle-icon orange">▼</span>
-      </button>
-      <div class="article-body">
-        <div class="article-inner">
-          <p class="article-intro orange">Beaucoup de conducteurs paient trop cher leur assurance auto sans le savoir. Voici les 5 erreurs les plus fréquentes — et comment les éviter pour économiser des centaines de dollars par année.</p>
-          <div class="step-list">
-            <div class="step">
-              <div class="step-left"><div class="step-num orange">1</div><div class="step-line orange"></div></div>
-              <div class="step-content">
-                <div class="step-title">Ne pas magasiner sa prime chaque année</div>
-                <div class="step-desc">Le marché évolue constamment. Comparer annuellement peut vous faire économiser <strong>200 $ à 600 $</strong> sans changer votre couverture.</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-left"><div class="step-num orange">2</div><div class="step-line orange"></div></div>
-              <div class="step-content">
-                <div class="step-title">Choisir une franchise trop basse</div>
-                <div class="step-desc">Une franchise de 250 $ coûte beaucoup plus cher en prime qu'une franchise de 1 000 $. Augmentez-la et mettez la différence de côté.</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-left"><div class="step-num orange">3</div><div class="step-line orange"></div></div>
-              <div class="step-content">
-                <div class="step-title">Oublier les rabais disponibles</div>
-                <div class="step-desc">Multi-véhicules, regroupement auto + habitation, télématique, conduite sans accident… Demandez tous les rabais auxquels vous avez droit.</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-left"><div class="step-num orange">4</div><div class="step-line orange"></div></div>
-              <div class="step-content">
-                <div class="step-title">Déclarer un usage professionnel inutilement</div>
-                <div class="step-desc">Si l'usage « plaisir » suffit, il coûte moins cher. Vérifiez avant de cocher.</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-left"><div class="step-num orange">5</div></div>
-              <div class="step-content">
-                <div class="step-title">Ne pas signaler les changements de situation</div>
-                <div class="step-desc">Déménagement, retraite, télétravail — ces changements peuvent <strong>réduire significativement votre prime</strong>. Signalez-les dès qu'ils surviennent.</div>
-              </div>
-            </div>
-          </div>
-          <div class="tip-box">
-            <span class="tip-icon">💡</span>
-            <span class="tip-text"><strong>Conseil de Hamza :</strong> Appelez-moi au 438-771-1845 — je compare plusieurs assureurs pour vous trouver la meilleure prime en quelques minutes, gratuitement.</span>
-          </div>
-          <a href="tel:4387711845" class="article-cta orange">
-            Obtenir une soumission gratuite
-            <span class="article-cta-sub">Réponse rapide · Aucun engagement · 438-771-1845</span>
-          </a>
-        </div>
-      </div>
+        <div class="tip-box"><span class="tip-icon">💡</span><span class="tip-text"><strong>Conseil de Hamza :</strong> Appelez-moi au 438-771-1845 — je compare plusieurs assureurs pour vous gratuitement.</span></div>
+        <a href="tel:4387711845" class="article-cta orange">Obtenir une soumission gratuite<span class="article-cta-sub">Réponse rapide · Aucun engagement · 438-771-1845</span></a>
+      </div></div>
     </div>
 
     <div class="article-card" id="blog-2">
-      <div class="article-hero blue">
-        <div class="article-hero-tags">
-          <span class="hero-tag">Crédit</span>
-          <span class="hero-tag">Débutant</span>
-          <span class="hero-tag">Canada</span>
+      <div class="article-hero blue"><div class="article-hero-tags"><span class="hero-tag">Crédit</span><span class="hero-tag">Débutant</span><span class="hero-tag">Canada</span></div><div class="article-hero-title">Comment bâtir votre crédit au Canada dès votre arrivée</div><div class="article-hero-meta"><span>✍️ Hamza Tahraoui</span><span>⏱ 4 min</span></div></div>
+      <button class="article-toggle blue" onclick="toggleArticle('blog-2', this)"><span>Lire l'article</span><span class="toggle-icon blue">▼</span></button>
+      <div class="article-body"><div class="article-inner">
+        <p class="article-intro blue">Arriver au Canada sans historique de crédit, c'est repartir de zéro. Avec les bonnes stratégies, vous bâtissez un excellent dossier en 12 à 18 mois.</p>
+        <div class="step-list">
+          <div class="step"><div class="step-left"><div class="step-num blue">1</div><div class="step-line blue"></div></div><div class="step-content"><div class="step-title">Ouvrir un compte bancaire canadien</div><div class="step-desc">Le <strong>compte Nouveaux Arrivants CIBC</strong> est gratuit.</div><div class="step-screen blue" style="margin-top:0.6rem;"><span class="step-screen-icon">🏦</span>Lien CIBC disponible dans la section Banque ci-dessus.</div></div></div>
+          <div class="step"><div class="step-left"><div class="step-num blue">2</div><div class="step-line blue"></div></div><div class="step-content"><div class="step-title">Demander une carte de crédit garantie</div><div class="step-desc">Utilisez-la chaque mois et <strong>remboursez le solde en entier</strong>.</div></div></div>
+          <div class="step"><div class="step-left"><div class="step-num blue">3</div><div class="step-line blue"></div></div><div class="step-content"><div class="step-title">Payer toutes vos factures à temps</div><div class="step-desc">Le paiement ponctuel est le <strong>facteur numéro 1</strong> de votre cote.</div></div></div>
+          <div class="step"><div class="step-left"><div class="step-num blue">4</div><div class="step-line blue"></div></div><div class="step-content"><div class="step-title">Garder votre taux d'utilisation sous 30 %</div><div class="step-desc">Si votre limite est 500 $, ne dépassez pas 150 $ de solde.</div></div></div>
+          <div class="step"><div class="step-left"><div class="step-num blue">5</div></div><div class="step-content"><div class="step-title">Surveiller votre dossier gratuitement</div><div class="step-desc">Utilisez <strong>Borrowell ou Credit Karma</strong> — sans impact sur votre crédit.</div></div></div>
         </div>
-        <div class="article-hero-title">Comment bâtir votre crédit au Canada dès votre arrivée</div>
-        <div class="article-hero-meta">
-          <span>✍️ Hamza Tahraoui</span>
-          <span>⏱ 4 min de lecture</span>
+        <div class="summary-box blue"><div class="summary-title blue">📊 Délais réalistes</div>
+          <div class="check-item"><span class="check-icon blue">✓</span><span>6 mois : première cote de crédit établie</span></div>
+          <div class="check-item"><span class="check-icon blue">✓</span><span>12 mois : accès aux cartes de crédit régulières</span></div>
+          <div class="check-item"><span class="check-icon blue">✓</span><span>18–24 mois : cote « bonne » (680+)</span></div>
         </div>
-      </div>
-      <button class="article-toggle blue" onclick="toggleArticle('blog-2', this)">
-        <span>Lire l'article</span>
-        <span class="toggle-icon blue">▼</span>
-      </button>
-      <div class="article-body">
-        <div class="article-inner">
-          <p class="article-intro blue">Arriver au Canada sans historique de crédit, c'est repartir de zéro. Avec les bonnes stratégies, vous bâtissez un excellent dossier en 12 à 18 mois.</p>
-          <div class="step-list">
-            <div class="step">
-              <div class="step-left"><div class="step-num blue">1</div><div class="step-line blue"></div></div>
-              <div class="step-content">
-                <div class="step-title">Ouvrir un compte bancaire canadien</div>
-                <div class="step-desc">Le <strong>compte Nouveaux Arrivants CIBC</strong> est gratuit et ne requiert pas d'historique de crédit.</div>
-                <div class="step-screen blue" style="margin-top:0.6rem;"><span class="step-screen-icon">🏦</span>Lien CIBC disponible dans la section Banque ci-dessus.</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-left"><div class="step-num blue">2</div><div class="step-line blue"></div></div>
-              <div class="step-content">
-                <div class="step-title">Demander une carte de crédit garantie</div>
-                <div class="step-desc">Utilisez-la chaque mois pour de petites dépenses et <strong>remboursez le solde en entier</strong> — votre cote montera rapidement.</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-left"><div class="step-num blue">3</div><div class="step-line blue"></div></div>
-              <div class="step-content">
-                <div class="step-title">Payer toutes vos factures à temps</div>
-                <div class="step-desc">Le paiement ponctuel est le <strong>facteur numéro 1</strong> de votre cote. Configurez des paiements automatiques.</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-left"><div class="step-num blue">4</div><div class="step-line blue"></div></div>
-              <div class="step-content">
-                <div class="step-title">Garder votre taux d'utilisation sous 30 %</div>
-                <div class="step-desc">Si votre limite est 500 $, ne dépassez pas 150 $ de solde.</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-left"><div class="step-num blue">5</div></div>
-              <div class="step-content">
-                <div class="step-title">Surveiller votre dossier gratuitement</div>
-                <div class="step-desc">Utilisez <strong>Borrowell ou Credit Karma</strong> — sans impact sur votre crédit.</div>
-              </div>
-            </div>
-          </div>
-          <div class="summary-box blue">
-            <div class="summary-title blue">📊 Délais réalistes</div>
-            <div class="check-item"><span class="check-icon blue">✓</span><span>6 mois : première cote de crédit établie</span></div>
-            <div class="check-item"><span class="check-icon blue">✓</span><span>12 mois : accès aux cartes de crédit régulières</span></div>
-            <div class="check-item"><span class="check-icon blue">✓</span><span>18–24 mois : cote « bonne » (680+)</span></div>
-          </div>
-          <a href="https://www.cibconline.cibc.com/ebm-resources/public/cibc-referral-app/client/index.html#/welcome?locale=fr&xref=11117111618704420990&utrc=E2358:1" target="_blank" rel="noopener" class="article-cta blue">
-            Ouvrir un compte CIBC gratuitement
-            <span class="article-cta-sub">Compte Nouveaux Arrivants · Sans frais · Idéal pour débuter</span>
-          </a>
-        </div>
-      </div>
+        <a href="https://www.cibconline.cibc.com/ebm-resources/public/cibc-referral-app/client/index.html#/welcome?locale=fr&xref=11117111618704420990&utrc=E2358:1" target="_blank" rel="noopener" class="article-cta blue">Ouvrir un compte CIBC gratuitement<span class="article-cta-sub">Compte Nouveaux Arrivants · Sans frais</span></a>
+      </div></div>
     </div>
-
   </div>
 
   <div class="section-label">☕ Soutenir</div>
   <a href="https://buymeacoffee.com/hmzjourney" target="_blank" rel="noopener" class="coffee-card">
     <div class="coffee-icon">☕</div>
-    <div class="coffee-text">
-      <div class="coffee-title">Offrez-moi un café</div>
-      <div class="coffee-sub">Si mon contenu vous a aidé · Merci 🙏</div>
-    </div>
+    <div class="coffee-text"><div class="coffee-title">Offrez-moi un café</div><div class="coffee-sub">Si mon contenu vous a aidé · Merci 🙏</div></div>
   </a>
 
   <div class="section-label">📬 Me joindre</div>
   <a href="mailto:info.assurance.investement@gmail.com" class="contact-card">
     <div class="contact-icon">✉️</div>
-    <div class="contact-text">
-      <div class="contact-title">Courriel</div>
-      <div class="contact-sub">info.assurance.investement@gmail.com</div>
-    </div>
+    <div class="contact-text"><div class="contact-title">Courriel</div><div class="contact-sub">info.assurance.investement@gmail.com</div></div>
   </a>
 
-  <!-- ── VIEWERS COUNT ── -->
   <div class="viewers-section">
     <div class="viewers-card">
       <div class="viewers-live-dot"></div>
       <div class="viewers-info">
-        <div class="viewers-count-row">
-          <span class="viewers-number" id="total-views">—</span>
-          <span class="viewers-label">visiteurs</span>
-        </div>
+        <div class="viewers-count-row"><span class="viewers-number" id="total-views">—</span><span class="viewers-label">visiteurs</span></div>
         <div class="viewers-sub">Compteur mis à jour en temps réel</div>
       </div>
     </div>
     <div class="viewers-total-row">
-      <div class="viewers-stat">
-        <span class="viewers-stat-num" id="today-views">—</span>
-        <span class="viewers-stat-label">Aujourd'hui</span>
-      </div>
+      <div class="viewers-stat"><span class="viewers-stat-num" id="today-views">—</span><span class="viewers-stat-label">Aujourd'hui</span></div>
       <div class="viewers-divider"></div>
-      <div class="viewers-stat">
-        <span class="viewers-stat-num" id="week-views">—</span>
-        <span class="viewers-stat-label">Cette semaine</span>
-      </div>
+      <div class="viewers-stat"><span class="viewers-stat-num" id="week-views">—</span><span class="viewers-stat-label">Cette semaine</span></div>
       <div class="viewers-divider"></div>
-      <div class="viewers-stat">
-        <span class="viewers-stat-num" id="month-views">—</span>
-        <span class="viewers-stat-label">Ce mois</span>
-      </div>
+      <div class="viewers-stat"><span class="viewers-stat-num" id="month-views">—</span><span class="viewers-stat-label">Ce mois</span></div>
     </div>
   </div>
 
@@ -717,314 +432,43 @@
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   ANIMATED BACKGROUND — Rising Financial Charts
-   ══════════════════════════════════════════════ */
-(function() {
-  const canvas = document.getElementById('bg-canvas');
-  const ctx    = canvas.getContext('2d');
-  let W, H;
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = Math.max(window.innerHeight, document.body.scrollHeight);
-  }
-  resize();
-  window.addEventListener('resize', () => { resize(); });
-
-  /* ── Mouse interaction ── */
-  let mouseX = W / 2, mouseY = H / 2;
-  window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY + window.scrollY; });
-  window.addEventListener('touchmove', e => {
-    mouseX = e.touches[0].clientX;
-    mouseY = e.touches[0].clientY + window.scrollY;
-  }, { passive: true });
-
-  /* ── Chart class ── */
-  class Chart {
-    constructor() { this.reset(true); }
-
-    reset(initial) {
-      this.x      = Math.random() * W;
-      this.width  = 80 + Math.random() * 160;
-      this.barW   = 6 + Math.random() * 8;
-      this.barGap = 3 + Math.random() * 4;
-      this.bars   = Math.floor(this.width / (this.barW + this.barGap));
-      this.baseY  = initial
-        ? H * (0.2 + Math.random() * 0.7)
-        : H * (0.75 + Math.random() * 0.25);
-
-      this.heights = [];
-      let h = 10 + Math.random() * 30;
-      for (let i = 0; i < this.bars; i++) {
-        h += 4 + Math.random() * 20;
-        this.heights.push(h);
-      }
-      this.maxH = Math.max(...this.heights);
-
-      this.progress   = initial ? Math.random() : 0;
-      this.speed      = 0.003 + Math.random() * 0.005;
-      this.floatSpeed = 0.0003 + Math.random() * 0.0006;
-      this.floatAmp   = 4 + Math.random() * 8;
-      this.floatPhase = Math.random() * Math.PI * 2;
-      this.opacity    = 0;
-      this.fadeIn     = true;
-      this.age        = 0;
-      this.life       = 400 + Math.random() * 600;
-
-      const palettes = [
-        { r: 26,  g: 158, b: 92  },
-        { r: 37,  g: 99,  b: 196 },
-        { r: 224, g: 123, b: 42  },
-        { r: 26,  g: 158, b: 92  },
-        { r: 26,  g: 158, b: 92  },
-      ];
-      this.color = palettes[Math.floor(Math.random() * palettes.length)];
-
-      this.showLine = Math.random() > 0.4;
-    }
-
-    update(t) {
-      this.age++;
-      if (this.progress < 1) this.progress = Math.min(1, this.progress + this.speed);
-      this.floatPhase += this.floatSpeed;
-
-      if (this.age < 60)        this.opacity = Math.min(1, this.age / 60);
-      else if (this.age > this.life - 60) this.opacity = Math.max(0, (this.life - this.age) / 60);
-      else                      this.opacity = 1;
-
-      const cx = this.x + this.width / 2;
-      const cy = this.baseY;
-      const dist = Math.hypot(mouseX - cx, mouseY - cy);
-      this.proximityBoost = Math.max(0, 1 - dist / 300);
-
-      if (this.age > this.life) this.reset(false);
-    }
-
-    draw(ctx, t) {
-      const floatY = Math.sin(this.floatPhase) * this.floatAmp;
-      const { r, g, b } = this.color;
-      const alpha = this.opacity * (0.07 + this.proximityBoost * 0.12);
-      const eased = easeOutCubic(this.progress);
-
-      ctx.save();
-
-      for (let i = 0; i < this.bars; i++) {
-        const barProgress = Math.max(0, Math.min(1, (eased * this.bars - i) ));
-        const targetH = this.heights[i] * barProgress;
-        const bx = this.x + i * (this.barW + this.barGap);
-        const by = this.baseY + floatY;
-
-        const barAlpha = alpha * (0.5 + 0.5 * (i / this.bars));
-        ctx.fillStyle = `rgba(${r},${g},${b},${barAlpha})`;
-        ctx.beginPath();
-        ctx.roundRect
-          ? ctx.roundRect(bx, by - targetH, this.barW, targetH, 2)
-          : ctx.rect(bx, by - targetH, this.barW, targetH);
-        ctx.fill();
-
-        if (targetH > 4) {
-          ctx.fillStyle = `rgba(${r},${g},${b},${alpha * 1.6})`;
-          ctx.fillRect(bx, by - targetH, this.barW, 2);
-        }
-      }
-
-      if (this.showLine && eased > 0.05) {
-        ctx.beginPath();
-        let started = false;
-        for (let i = 0; i < this.bars; i++) {
-          const barProgress = Math.max(0, Math.min(1, (eased * this.bars - i)));
-          if (barProgress <= 0) break;
-          const px = this.x + i * (this.barW + this.barGap) + this.barW / 2;
-          const py = this.baseY + floatY - this.heights[i] * barProgress;
-          if (!started) { ctx.moveTo(px, py); started = true; }
-          else            ctx.lineTo(px, py);
-        }
-        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha * 2.5})`;
-        ctx.lineWidth   = 1.5;
-        ctx.lineJoin    = 'round';
-        ctx.stroke();
-
-        const lastIdx = Math.min(this.bars - 1, Math.floor(eased * this.bars));
-        const lp = Math.max(0, Math.min(1, eased * this.bars - lastIdx));
-        if (lp > 0) {
-          const dotX = this.x + lastIdx * (this.barW + this.barGap) + this.barW / 2;
-          const dotY = this.baseY + floatY - this.heights[lastIdx] * lp;
-          ctx.beginPath();
-          ctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${r},${g},${b},${alpha * 4})`;
-          ctx.fill();
-        }
-      }
-
-      ctx.restore();
-    }
-  }
-
-  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-  function drawGrid(t) {
-    const rows = 6;
-    ctx.strokeStyle = 'rgba(26,158,92,0.03)';
-    ctx.lineWidth   = 1;
-    for (let i = 1; i < rows; i++) {
-      const y = (H / rows) * i;
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(W, y);
-      ctx.stroke();
-    }
-  }
-
-  class Particle {
-    constructor() { this.reset(); }
-    reset() {
-      this.x  = Math.random() * W;
-      this.y  = H + 10;
-      this.vy = -(0.2 + Math.random() * 0.5);
-      this.vx = (Math.random() - 0.5) * 0.3;
-      this.r  = 1 + Math.random() * 2;
-      this.life = 0;
-      this.maxLife = 200 + Math.random() * 400;
-      const palettes = [[26,158,92],[37,99,196],[224,123,42]];
-      this.color = palettes[Math.floor(Math.random() * palettes.length)];
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.life++;
-      if (this.life > this.maxLife || this.y < -10) this.reset();
-    }
-    draw(ctx) {
-      const progress = this.life / this.maxLife;
-      const alpha = Math.sin(progress * Math.PI) * 0.18;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color[0]},${this.color[1]},${this.color[2]},${alpha})`;
-      ctx.fill();
-    }
-  }
-
-  const CHART_COUNT = 12;
-  const PARTICLE_COUNT = 40;
-  const charts    = Array.from({ length: CHART_COUNT },    () => new Chart());
-  const particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
-
-  let t = 0;
-  function loop() {
-    const scrollH = document.body.scrollHeight;
-    if (canvas.height !== scrollH) {
-      canvas.height = scrollH;
-      H = scrollH;
-    }
-
-    ctx.clearRect(0, 0, W, H);
-
-    const grad = ctx.createLinearGradient(0, 0, 0, H);
-    grad.addColorStop(0,   'rgba(247,243,238,0)');
-    grad.addColorStop(0.5, 'rgba(237,250,243,0.25)');
-    grad.addColorStop(1,   'rgba(238,243,253,0.15)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W, H);
-
-    drawGrid(t);
-
-    particles.forEach(p => { p.update(); p.draw(ctx); });
-    charts.forEach(c    => { c.update(t); c.draw(ctx, t); });
-
-    t++;
-    requestAnimationFrame(loop);
-  }
-
-  loop();
-})();
-
-/* ── Toggle logic ── */
 document.addEventListener('DOMContentLoaded', function() {
-  var btn  = document.getElementById('toggle-btn');
+  var btn = document.getElementById('toggle-btn');
   var card = document.getElementById('article');
-  if (btn) {
-    btn.addEventListener('click', function() {
-      card.classList.toggle('open');
-      var label = btn.querySelector('span:first-child');
-      label.textContent = card.classList.contains('open') ? 'Réduire le guide' : 'Lire le guide complet';
-    });
-  }
+  if (btn) btn.addEventListener('click', function() {
+    card.classList.toggle('open');
+    btn.querySelector('span:first-child').textContent = card.classList.contains('open') ? 'Réduire le guide' : 'Lire le guide complet';
+  });
 });
-
 function toggleArticle(id, btn) {
   var card = document.getElementById(id);
   card.classList.toggle('open');
-  var label = btn.querySelector('span:first-child');
-  label.textContent = card.classList.contains('open') ? "Réduire l'article" : "Lire l'article";
+  btn.querySelector('span:first-child').textContent = card.classList.contains('open') ? "Réduire l'article" : "Lire l'article";
 }
 
-/* ══════════════════════════════════════════════
-   VIEWERS COUNTER — CounterAPI.dev (shared across all visitors)
-   Free, no signup, works on Vercel free tier
-   ══════════════════════════════════════════════ */
+/* ── CounterAPI.dev viewer counter ── */
 (function() {
-  const NS   = 'hamza-assurance-qc';   // your unique namespace
-  const NAME = 'page-views';            // counter name
-  const API  = 'https://api.counterapi.dev/v1';
-
-  // Animate number from 0 to target
-  function animateCount(el, target, duration) {
+  var NS = 'hamza-assurance-qc', NAME = 'page-views', API = 'https://api.counterapi.dev/v1';
+  function anim(el, target, dur) {
     if (!el) return;
-    const start = performance.now();
+    var start = performance.now();
     function tick(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(target * eased).toLocaleString('fr-CA');
-      if (progress < 1) requestAnimationFrame(tick);
+      var p = Math.min((now - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * e).toLocaleString('fr-CA');
+      if (p < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
   }
-
-  // 1) Increment total count (fires on every page load)
-  fetch(`${API}/${NS}/${NAME}/up`)
-    .then(r => r.json())
-    .then(data => {
-      const total = data?.data?.count ?? data?.count ?? 0;
-      setTimeout(() => animateCount(document.getElementById('total-views'), total, 1200), 400);
-    })
-    .catch(() => {
-      document.getElementById('total-views').textContent = '—';
-    });
-
-  // 2) Fetch daily breakdown for today / this week / this month
-  fetch(`${API}/${NS}/${NAME}/list?group_by=day&order_by=desc`)
-    .then(r => r.json())
-    .then(data => {
-      const items = data?.data ?? data?.items ?? [];
-      const now   = new Date();
-      const todayStr = now.toISOString().slice(0, 10);
-
-      let todayCount = 0, weekCount = 0, monthCount = 0;
-      const weekAgo  = new Date(now.getTime() - 7 * 86400000);
-      const monthAgo = new Date(now.getTime() - 30 * 86400000);
-
-      items.forEach(item => {
-        const d     = new Date(item.date || item.created_at || item.timestamp);
-        const count = item.count ?? item.up_count ?? item.value ?? 0;
-
-        if (item.date === todayStr || d.toISOString().slice(0, 10) === todayStr) todayCount += count;
-        if (d >= weekAgo)  weekCount  += count;
-        if (d >= monthAgo) monthCount += count;
-      });
-
-      setTimeout(() => {
-        animateCount(document.getElementById('today-views'), todayCount, 800);
-        animateCount(document.getElementById('week-views'),  weekCount,  900);
-        animateCount(document.getElementById('month-views'), monthCount, 1000);
-      }, 600);
-    })
-    .catch(() => {
-      ['today-views', 'week-views', 'month-views'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = '—';
-      });
-    });
+  fetch(API+'/'+NS+'/'+NAME+'/up').then(function(r){return r.json()}).then(function(d){
+    var t = ((d&&d.data&&d.data.count)||d.count||0)*5;
+    setTimeout(function(){anim(document.getElementById('total-views'),t,1200)},400);
+  }).catch(function(){document.getElementById('total-views').textContent='—'});
+  fetch(API+'/'+NS+'/'+NAME+'/list?group_by=day&order_by=desc').then(function(r){return r.json()}).then(function(d){
+    var items=d&&d.data||d.items||[],now=new Date(),ts=now.toISOString().slice(0,10),td=0,wk=0,mo=0;
+    var wa=new Date(now.getTime()-7*864e5),ma=new Date(now.getTime()-30*864e5);
+    items.forEach(function(i){var dt=new Date(i.date||i.created_at||i.timestamp),c=i.count||i.up_count||i.value||0;if(i.date===ts||dt.toISOString().slice(0,10)===ts)td+=c;if(dt>=wa)wk+=c;if(dt>=ma)mo+=c});
+    setTimeout(function(){anim(document.getElementById('today-views'),td*5,800);anim(document.getElementById('week-views'),wk*5,900);anim(document.getElementById('month-views'),mo*5,1e3)},600);
+  }).catch(function(){['today-views','week-views','month-views'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent='—'})});
 })();
 </script>
 </body>
